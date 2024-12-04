@@ -17,44 +17,30 @@ tree_colors = {
     "palm": "yellowgreen"  # 棕櫚樹為黃綠色
 }
 
-# 更新plot_fire函數
-def plot_fire(grid, tree_types, step, tree_colors):
+def plot_fire(grid, tree_types, step):
+    # 更新火災顯示
     rows, cols = grid.shape
-
-    # 創建grid的顏色映射，初始為未種植區域顏色
-    grid_colored = np.zeros((rows, cols), dtype=int)  # 默認為未種植區域（對應數字0）
+    grid_colored = np.zeros((rows, cols), dtype=int)  # 默認為未種植區域顏色
 
     # 替換樹木顏色
     for r in range(rows):
         for c in range(cols):
             if grid[r, c] == 1:  # 樹木
                 tree_type = tree_types[r, c]  # 獲取該位置的樹種
-                tree_color = tree_colors.get(tree_type, "green")  # 如果樹種未定義，則使用默認顏色綠色
-                # 使用數字來表示樹木顏色
-                if tree_color == "green":
-                    grid_colored[r, c] = 1
-                elif tree_color == "darkgreen":
-                    grid_colored[r, c] = 5
-                elif tree_color == "yellowgreen":
-                    grid_colored[r, c] = 6
-            elif grid[r, c] in color_map:  # 如果是火焰或其他特殊區域
-                grid_colored[r, c] = grid[r, c]  # 保持原有顏色數字
+                grid_colored[r, c] = 1  # 假設樹木為綠色
+            elif grid[r, c] == 3:  # 水體區域
+                grid_colored[r, c] = 2  # 設置水體區域為藍色
+            elif grid[r, c] == 2:  # 火焰
+                grid_colored[r, c] = 3  # 火焰區域為紅色
+            elif grid[r, c] == 4:  # 燃燒後的區域
+                grid_colored[r, c] = 4  # 黑色
 
     # 自定義顏色映射
-    colors = ["brown", "green", "red", "blue", "black", "darkgreen", "yellowgreen"]  # 根據需要調整顏色
+    colors = ["brown", "green", "blue", "red", "black"]  # 代表樹木、水體、火焰和燃燒區域的顏色
     cmap = ListedColormap(colors)
 
-    # 使用imshow顯示更新的顏色
     plt.imshow(grid_colored, cmap=cmap, interpolation='nearest')
-
-    # 顯示顏色條
-    plt.colorbar(ticks=[0, 1, 2, 3, 4, 5, 6], label="Cell Type")
-
-    # 顯示標題
+    plt.colorbar(ticks=[0, 1, 2, 3, 4], label="Cell Type")
     plt.title(f"Fire Spread Simulation - Step {step}")
-
-    # 暫停0.5秒，以便查看每個步驟
     plt.pause(0.5)
-
-    # 清除圖像
     plt.clf()
