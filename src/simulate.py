@@ -16,11 +16,12 @@ def simulate_fire(grid, tree_types, temperatures, humidities, steps, wind_speed,
         auxii = 0.49 * wind_speed + 0.5
         auxi = 1 - auxii
         # 定義風向對應的權重
+        # [北、南、西、東]
     wind_weights = {
-        'N': [auxii, auxi, auxi, auxii],  # 北
-        'E': [auxi, auxii, auxi, auxii],  # 東
-        'S': [auxii, auxii, auxi, auxi],  # 南
-        'W': [auxi, auxi, auxii, auxii],  # 西
+        'N': [auxi, auxii, 1, 1],  # 北
+        'E': [1, 1, auxii, auxi],  # 東
+        'S': [auxii, auxi, 1, 1],  # 南
+        'W': [1, 1, auxi, auxii],  # 西
     }
     NZ = wind_weights[wind_direction]
 
