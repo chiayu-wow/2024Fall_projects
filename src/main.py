@@ -12,5 +12,5 @@ if __name__ == "__main__":
     rows, cols = 20, 20  # 網格尺寸
 
     grid, tree_types, temperatures, humidities = initialize_grid(rows, cols, 0.05)
-    simulate_fire(grid, tree_types, temperatures, humidities, 20, 30 , 'E')
+    simulate_fire(grid, tree_types, temperatures, humidities, 20, 10 , 'S')
 
