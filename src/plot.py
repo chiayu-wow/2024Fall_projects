@@ -21,6 +21,8 @@ def plot_fire(grid, tree_types, hours):
                 grid_colored[r, c] = np.array(to_rgb("red")) * 255  # Red for fire
             elif grid[r, c] == 4:  # Burnt cell
                 grid_colored[r, c] = np.array(to_rgb("black")) * 255  # Black for burnt area
+            elif grid[r, c] == 5:  # Burnt cell
+                grid_colored[r, c] = np.array(to_rgb("mediumseagreen")) * 255  # Black for burnt area
             else:  # Empty land or any other type
                 grid_colored[r, c] = np.array(to_rgb("brown")) * 255  # Brown for empty land
 

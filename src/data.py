@@ -1,18 +1,17 @@
 tree_flammability = {
-    "pine": 0.8,  # 松樹，高可燃性
-    "oak": 0.4,  # 橡樹，低等可燃性
-    "palm": 0.6,  # 棕櫚樹，中可燃性
+    "pine": 0.85,  # 松樹，高可燃性
+    "oak": 0.55,  # 橡樹，低等可燃性
+    "palm": 0.7,  # 棕櫚樹，中可燃性
     "bush": 0.95,
     None: 0.0
 }
 
 # Define tree colors mapping
 tree_colors = {
-    "pine": "green",  # 松樹 (Pine) - Green
-    "oak": "darkgreen",  # 橡樹 (Oak) - Dark Green
-    "palm": "yellowgreen",  # 棕櫚樹 (Palm) - Yellow Green
-    None: "brown",  # Empty or unplanted land - Brown
-    "bush": "lightgreen"  # Bush - Light Green
+    "pine": "darkgreen",  # 松樹 (Pine) - Green
+    "oak": "green",  # 橡樹 (Oak) - Dark Green
+    "palm": "seagreen",  # 棕櫚樹 (Palm) - Yellow Green
+    None: "brown"  # Empty or unplanted land - Brown
 }
 
 # 燃燒速率（單位：步驟數，每步擴散多少單位）
