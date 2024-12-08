@@ -46,5 +46,5 @@ def plot_fire(grid, tree_types, step):
     plt.imshow(grid_colored, interpolation='nearest')
     plt.colorbar(ticks=[0, 1, 2, 3, 4], label="Cell Type")
     plt.title(f"Fire Spread Simulation - Step {step}")
-    plt.pause(0.5)  # Pause to update the plot
+    plt.pause(0.1)  # Pause to update the plot
     plt.clf()  # Clear the figure for the next plot
