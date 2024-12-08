@@ -3,7 +3,7 @@ from matplotlib.colors import to_rgb  # Import to_rgb from matplotlib.colors
 import numpy as np
 from data import  tree_colors
 
-def plot_fire(grid, tree_types, step):
+def plot_fire(grid, tree_types, hours):
     # Initialize grid for colored visualization
     rows, cols = grid.shape
     grid_colored = np.zeros((rows, cols, 3), dtype=int)  # RGB color grid
@@ -27,6 +27,6 @@ def plot_fire(grid, tree_types, step):
     # Plot the grid using the colors
     plt.imshow(grid_colored, interpolation='nearest')
     plt.colorbar(ticks=[0, 1, 2, 3, 4], label="Cell Type")
-    plt.title(f"Fire Spread Simulation - Step {step}")
+    plt.title(f" {hours} hour of Fire Spread")
     plt.pause(0.1)  # Pause to update the plot
     plt.clf()  # Clear the figure for the next plot

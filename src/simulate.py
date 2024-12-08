@@ -20,8 +20,10 @@ def calculate_humidity_and_temperature(grid):
                             continue  # Skip other water cells
                         distance = abs(i - x) + abs(j - y)  # Calculate Manhattan distance
                         # Only affect cells within 4 distance of water cells, and avoid fire cells
-                        if distance <= 4 and grid[x, y] != 2:  # Exclude fire cells
+                        if distance <= 4 and grid[x, y] != 2 and humidities[x,y] < 1:  # Exclude fire cells
                             humidities[x, y] += 0.8 / (distance + 2)  # Decay humidity with distance
+                            if humidities[x,y] >= 1:
+                                humidities[x,y] = 1
 
     # Update temperature based on proximity to fire (grid value 2)
     for i in range(rows):
@@ -43,9 +45,9 @@ def calculate_humidity_and_temperature(grid):
     return humidities, temperatures  # Return both the humidity and temperature grids
 
 
-def simulate_fire(grid, tree_types, steps, wind_speed, wind_direction):
+def simulate_fire(grid, tree_types, wind_speed, wind_direction):
     rows, cols = grid.shape
-
+    hours = 0
     # 設定風速與風向權重
     if wind_speed < 0.3:
         tailwind = 1
@@ -64,8 +66,8 @@ def simulate_fire(grid, tree_types, steps, wind_speed, wind_direction):
 
     # 初始化冷卻計時器，追蹤每個單元格的冷卻狀態
     cooldowns = np.zeros_like(grid, dtype=float)
-
-    for step in range(steps):
+    hours = 0
+    while True:
         # 檢查是否還有火災，如果沒有，結束模擬
         if np.sum(grid == 2) == 0:
             print("No fire left, ending simulation.")
@@ -90,12 +92,17 @@ def simulate_fire(grid, tree_types, steps, wind_speed, wind_direction):
                             # 調整燃燒速率和燃燒機率，考慮風速和風向
                             wind_factor = NZ[i]  # 方向權重
                             adjusted_burn_rate = burn_rate * (1 + 0.5 * wind_speed * wind_factor)  # 根據風速調整燃燒速率
-                            burn_probability = flammability * (1 - humidities[nr, nc]) * \
-                                               (1 + (temperatures[nr, nc] - 25) / 100)
+                            burn_probability = flammability * (1 - humidities[nr, nc] + 0.1) * (1 + (temperatures[nr, nc] - 25) / 100)
                             adjusted_burn_probability = burn_probability * wind_factor  # 調整燃燒機率
-
+                            print(adjusted_burn_probability, burn_probability)
+                            print(f'wind : ${wind_factor}')
+                            print(r,c, flammability, humidities[nr,nc],
+                                               (1 + (temperatures[nr, nc] - 25) / 100) )
                             # 隨機判斷是否點燃該單元格
-                            if np.random.random() < adjusted_burn_probability:
+                            random_prob = np.random.random()
+                            print(f' prob : ${random_prob}')
+                            print("*****")
+                            if  random_prob < adjusted_burn_probability:
                                 new_grid[nr, nc] = 2  # 樹開始燃燒
                                 cooldowns[nr, nc] = 1 / adjusted_burn_rate  # 設置調整後的冷卻時間
 
@@ -106,7 +113,6 @@ def simulate_fire(grid, tree_types, steps, wind_speed, wind_direction):
         # 更新冷卻計時器
         cooldowns = np.maximum(0, cooldowns - 1)
         grid = new_grid
-        plot_fire(grid, tree_types, step)  # 更新並顯示新步驟
-
-    plt.show()
+        plot_fire(grid, tree_types, hours)  # 更新並顯示新步驟
+        hours += 1
 
