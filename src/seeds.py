@@ -1,7 +1,6 @@
 import numpy as np
 
-
-def initialize_grid(rows, cols, water_body_ratio=0.2, fire_location=(50, 50), num_water_bodies=2):
+def initialize_grid(rows, cols, water_body_ratio=0.2, fire_location=(25, 25), num_water_bodies=2):
     grid = np.random.choice([0, 1], size=(rows, cols), p=[0.15, 0.85])  # 15% 空地，85% 樹木
     grid[fire_location] = 2  # 火災初始點設為 (10, 10)
 

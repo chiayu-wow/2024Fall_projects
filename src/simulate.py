@@ -1,13 +1,8 @@
-from plot import plot_fire
 import matplotlib.pyplot as plt
 import numpy as np
 from data import tree_flammability
-from data import tree_colors
 from data import tree_burn_rates
 from plot import plot_fire
-
-import numpy as np
-
 
 def calculate_humidity_and_temperature(grid):
     rows, cols = grid.shape

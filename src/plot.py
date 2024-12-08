@@ -1,25 +1,7 @@
 import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap, to_rgb  # Import to_rgb from matplotlib.colors
+from matplotlib.colors import to_rgb  # Import to_rgb from matplotlib.colors
 import numpy as np
-
-# Define color map for different cell types
-color_map = {
-    0: "brown",  # 未種植 (Empty land)
-    1: "green",  # 樹木 (Tree)
-    2: "red",  # 火焰 (Fire)
-    3: "blue",  # 水體 (Water)
-    4: "black"  # 燃燒後 (Burnt)
-}
-
-# Define tree colors mapping
-tree_colors = {
-    "pine": "green",  # 松樹 (Pine) - Green
-    "oak": "darkgreen",  # 橡樹 (Oak) - Dark Green
-    "palm": "yellowgreen",  # 棕櫚樹 (Palm) - Yellow Green
-    None: "brown",  # Empty or unplanted land - Brown
-    "bush": "lightgreen"  # Bush - Light Green
-}
-
+from data import  tree_colors
 
 def plot_fire(grid, tree_types, step):
     # Initialize grid for colored visualization
