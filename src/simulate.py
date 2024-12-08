@@ -3,6 +3,7 @@ import  matplotlib.pyplot as plt
 import numpy as np
 from data import  tree_flammability
 from data import  tree_colors
+from data import  tree_burn_rates
 from plot import plot_fire
 
 import numpy as np
@@ -64,6 +65,9 @@ def simulate_fire(grid, tree_types, steps, wind_speed, wind_direction):
     }
     NZ = wind_weights[wind_direction]
 
+    # 初始化冷卻計時器，追蹤每個單元格的冷卻狀態
+    cooldowns = np.zeros_like(grid, dtype=float)
+
     for step in range(steps):
         # 檢查是否還有火災，如果沒有，結束模擬
         if np.sum(grid == 2) == 0:
@@ -76,7 +80,7 @@ def simulate_fire(grid, tree_types, steps, wind_speed, wind_direction):
         new_grid = grid.copy()
         for r in range(rows):
             for c in range(cols):
-                if grid[r, c] == 2:  # 火焰擴散
+                if grid[r, c] == 2 and cooldowns[r, c] <= 0:  # 火焰擴散
                     # 燃燒鄰近的樹木
                     for i, (dr, dc) in enumerate([(-1, 0), (1, 0), (0, -1), (0, 1)]):  # N, S, W, E
                         nr, nc = r + dr, c + dc
@@ -84,6 +88,7 @@ def simulate_fire(grid, tree_types, steps, wind_speed, wind_direction):
                             # 根據樹種的可燃性和濕氣決定是否燃燒
                             tree_type = tree_types[nr, nc]
                             flammability = tree_flammability[tree_type]
+                            burn_rate = tree_burn_rates[tree_type]
                             # 根據濕氣減少燃燒機率，並考慮溫度的影響
                             burn_probability = flammability * (1 - humidities[nr, nc]) * (
                                         1 + (temperatures[nr, nc] - 25) / 100)
@@ -91,8 +96,12 @@ def simulate_fire(grid, tree_types, steps, wind_speed, wind_direction):
                             adjusted_burn_probability = burn_probability * NZ[i]
                             if np.random.random() < adjusted_burn_probability:  # 濕氣越高，燃燒機率越低
                                 new_grid[nr, nc] = 2
+                                cooldowns[nr, nc] = 1 / burn_rate  # 設置冷卻時間
                     # 燃燒後的區域變為黑色
                     new_grid[r, c] = 4
+                    cooldowns[r, c] = 0  # 重置冷卻時間
+        # 更新冷卻計時器
+        cooldowns = np.maximum(0, cooldowns - 1)
         grid = new_grid
         plot_fire(grid, tree_types, step)  # 更新並顯示新步驟
 
