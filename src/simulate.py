@@ -1,12 +1,13 @@
 from plot import plot_fire
-import  matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import numpy as np
-from data import  tree_flammability
-from data import  tree_colors
-from data import  tree_burn_rates
+from data import tree_flammability
+from data import tree_colors
+from data import tree_burn_rates
 from plot import plot_fire
 
 import numpy as np
+
 
 def calculate_humidity_and_temperature(grid):
     rows, cols = grid.shape
@@ -33,7 +34,8 @@ def calculate_humidity_and_temperature(grid):
             if grid[i, j] == 2:  # Fire cell
                 for x in range(max(0, i - 1), min(rows, i + 2)):  # Check 3x3 area around fire
                     for y in range(max(0, j - 1), min(cols, j + 2)):
-                        temperatures[x, y] = min(100, temperatures[x, y] + 5)  # Increase temperature by 5, capped at 100°C
+                        temperatures[x, y] = min(100,
+                                                 temperatures[x, y] + 5)  # Increase temperature by 5, capped at 100°C
 
     # Adjust temperature based on humidity (e.g., cooler near water, warmer near fire)
     for i in range(rows):
@@ -91,7 +93,7 @@ def simulate_fire(grid, tree_types, steps, wind_speed, wind_direction):
                             burn_rate = tree_burn_rates[tree_type]
                             # 根據濕氣減少燃燒機率，並考慮溫度的影響
                             burn_probability = flammability * (1 - humidities[nr, nc]) * (
-                                        1 + (temperatures[nr, nc] - 25) / 100)
+                                    1 + (temperatures[nr, nc] - 25) / 100)
                             # 根據風向調整燃燒機率
                             adjusted_burn_probability = burn_probability * NZ[i]
                             if np.random.random() < adjusted_burn_probability:  # 濕氣越高，燃燒機率越低

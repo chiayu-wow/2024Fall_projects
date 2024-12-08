@@ -6,19 +6,20 @@ import numpy as np
 color_map = {
     0: "brown",  # 未種植 (Empty land)
     1: "green",  # 樹木 (Tree)
-    2: "red",    # 火焰 (Fire)
-    3: "blue",   # 水體 (Water)
-    4: "black"   # 燃燒後 (Burnt)
+    2: "red",  # 火焰 (Fire)
+    3: "blue",  # 水體 (Water)
+    4: "black"  # 燃燒後 (Burnt)
 }
 
 # Define tree colors mapping
 tree_colors = {
     "pine": "green",  # 松樹 (Pine) - Green
     "oak": "darkgreen",  # 橡樹 (Oak) - Dark Green
-    "palm": "yellowgreen", # 棕櫚樹 (Palm) - Yellow Green
+    "palm": "yellowgreen",  # 棕櫚樹 (Palm) - Yellow Green
     None: "brown",  # Empty or unplanted land - Brown
     "bush": "lightgreen"  # Bush - Light Green
 }
+
 
 def plot_fire(grid, tree_types, step):
     # Initialize grid for colored visualization

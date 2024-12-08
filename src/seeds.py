@@ -1,6 +1,7 @@
 import numpy as np
 
-def initialize_grid(rows, cols, water_body_ratio=0.2, fire_location=(10, 10), num_water_bodies = 2):
+
+def initialize_grid(rows, cols, water_body_ratio=0.2, fire_location=(50, 50), num_water_bodies=2):
     grid = np.random.choice([0, 1], size=(rows, cols), p=[0.15, 0.85])  # 15% 空地，85% 樹木
     grid[fire_location] = 2  # 火災初始點設為 (10, 10)
 
@@ -23,7 +24,7 @@ def initialize_grid(rows, cols, water_body_ratio=0.2, fire_location=(10, 10), nu
                 (current_cell[0] + dx, current_cell[1] + dy)
                 for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]
                 if 0 <= current_cell[0] + dx < rows and 0 <= current_cell[1] + dy < cols
-                and (current_cell[0] + dx, current_cell[1] + dy) not in all_water_cells
+                   and (current_cell[0] + dx, current_cell[1] + dy) not in all_water_cells
             ]
             if neighbors:
                 new_cell = neighbors[np.random.randint(0, len(neighbors))]
@@ -38,6 +39,5 @@ def initialize_grid(rows, cols, water_body_ratio=0.2, fire_location=(10, 10), nu
     # 樹木類型
     tree_types = np.empty_like(grid, dtype=object)
     tree_types[grid == 1] = np.random.choice(["pine", "oak", "palm", "bush"], size=np.sum(grid == 1))
-
 
     return grid, tree_types
