@@ -49,7 +49,7 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction):
     rows, cols = grid.shape
     hours = 0
     # 設定風速與風向權重
-    if wind_speed < 0.3:
+    if wind_speed < 1:
         tailwind = 1
         against_wind = 1
     else:
