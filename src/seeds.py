@@ -66,7 +66,7 @@ def initialize_grid(rows, cols, water_body_ratio=0.2, fire_location=(25, 25), nu
 
     # Tree types: assign types to trees and bushes
     tree_types = np.empty_like(grid, dtype=object)
-    tree_types[grid == 1] = np.random.choice(["pine", "oak", "palm"], size=np.sum(grid == 1))
+    tree_types[grid == 1] = np.random.choice(["pine", "oak", "willow"], size=np.sum(grid == 1))
     tree_types[grid == 5] = "bush"  # Assign bushes explicitly
 
     return grid, tree_types

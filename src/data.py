@@ -10,7 +10,7 @@ tree_flammability = {
 tree_colors = {
     "pine": "darkgreen",  # 松樹 (Pine) - Green
     "oak": "green",  # 橡樹 (Oak) - Dark Green
-    "willow": "seagreen",  # 柳樹 (Palm) - Yellow Green
+    "willow": "seagreen",  # 柳樹 (willow) - Yellow Green
     None: "brown"  # Empty or unplanted land - Brown
 }
 
