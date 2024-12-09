@@ -31,4 +31,4 @@ if __name__ == "__main__":
     # Replace 'None' strings with `None` objects or np.nan (if needed for numerical operations)
     tree_types = np.where(tree_types == 'None', None, tree_types)
 
-    simulate_fire(grid, tree_types, 0, 'E')
+    simulate_fire(grid, tree_types, 362, 'W')
