@@ -42,6 +42,8 @@ if __name__ == "__main__":
     # Save the results to a CSV file for further analysis
     combined_results_01.to_csv("data/hypothesis1_df_test.csv", index=False)
 
+    print('Hypothesis 1 simulation complete')
+
     ## hypothesis 2 simulation ##
     # simulate fire
 
@@ -61,10 +63,11 @@ if __name__ == "__main__":
     burn_probabilities_02 = data_02[:2500].reshape(50, 50)
 
     plot_fire_and_water_influence(grid, burn_probabilities_02)
+    print('Hypothesis 2 simulation complete')
 
     ## hypothesis 3 simulation ##
     # 設定要比較的風速和風向
-    wind_speeds_03 = [0]  # 三種風速
+    wind_speeds_03 = [10]  # 三種風速
     wind_direction_03 = "N"  # 北風
 
     # 執行模擬
@@ -86,7 +89,8 @@ if __name__ == "__main__":
 
     # 匯出結果為 CSV
     combined_results_03.to_csv("data/wind_speed_comparison_results_test.csv", index=False)
-    print("Simulation results saved to 'wind_speed_comparison_results_test.csv'")
+
+    print('Hypothesis 3 simulation complete')
 
     ## validation simulation ##
     # summer
@@ -109,5 +113,5 @@ if __name__ == "__main__":
 
     # 2. Plot Heatmaps and Boxplot
     plot_heatmap_and_boxplot(burn_probabilities_winter, burn_probabilities_summer)
-
+    print('Validation simulation complete')
     ## end
