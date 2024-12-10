@@ -1,6 +1,7 @@
 import numpy as np
 from simulate import  simulate_fire
 from analyze import  plot_fire_and_water_influence, describe_data, plot_heatmap_and_boxplot
+from seeds import initialize_grid
 
 # 主程式
 if __name__ == "__main__":
@@ -8,15 +9,15 @@ if __name__ == "__main__":
     '''
     grid, tree_types = initialize_grid(rows, cols, 0.05)
     
-    with open("/data/data_grid.txt", "w") as file:
+    with open("data/data_grid.txt", "w") as file:
         for row in grid:
             file.write(" ".join(map(str, row)) + "\n")
     
-    with open("/data/data_tree_types.txt", "w") as file:
+    with open("data/data_tree_types.txt", "w") as file:
         for row in tree_types:
             file.write(" ".join(map(lambda x: str(x) if x is not None else "None", row)) + "\n")
-   '''
 
+    '''
     with open('data/data_grid.txt', 'r') as file:
         data = file.readlines()
 
