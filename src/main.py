@@ -1,11 +1,7 @@
 import numpy as np
 from simulate import simulate_fire
-from functions import plot_fire_and_water_influence, describe_data, plot_heatmap_and_boxplot
-from functions import clear_and_set_fire
-from functions import find_closest_location
-from functions import simulate_multiple_starts
-from functions import compare_bush_non_bush
-from functions import compare_wind_speeds
+from functions import compare_bush_non_bush, plot_fire_and_water_influence, compare_wind_speeds, describe_data, \
+    plot_heatmap_and_boxplot
 from seeds import initialize_grid
 
 # 主程式
@@ -49,7 +45,7 @@ if __name__ == "__main__":
     ## hypothesis 2 simulation ##
     # simulate fire
 
-    burn_probabilities_02, results_df = simulate_fire(grid, tree_types, 10, 'E', 1, True,'winter')
+    burn_probabilities_02, results_df = simulate_fire(grid, tree_types, 10, 'E', 1, True, 'winter')
 
     output_file_02 = "data/burn_probabilities.txt"
     with open(output_file_02, "w") as file:
