@@ -37,6 +37,9 @@ if __name__ == "__main__":
     # Replace 'None' strings with `None` objects or np.nan (if needed for numerical operations)
     tree_types = np.where(tree_types == 'None', None, tree_types)
 
+
+    ## hypothesis 2 simulation
+    # simulate fire
     burn_probabilities, results_df = simulate_fire(grid, tree_types, 10, 'E', 1, True,None)
 
 
@@ -50,15 +53,15 @@ if __name__ == "__main__":
     file_path = 'data/burn_probabilities.txt'  # Replace with your file path
     data = np.loadtxt(file_path)
 
-    # Ensure there are at least 2500 numbers
-    if data.size < 2500:
-        raise ValueError("The file must contain at least 2500 numbers to form a 50x50 matrix.")
+
 
     # Reshape into a 50x50 matrix
     burn_probabilities = data[:2500].reshape(50, 50)
 
     plot_fire_and_water_influence(grid, burn_probabilities)
 
+
+    ## validation simulation
     file_path = 'data/burn_probabilities_summer.txt'  # Replace with your file path
     data = np.loadtxt(file_path)
 
@@ -84,6 +87,8 @@ if __name__ == "__main__":
 
     # 2. Plot Heatmaps and Boxplot
     plot_heatmap_and_boxplot(burn_probabilities_winter, burn_probabilities_summer)
+
+    ## end
 
 
 
