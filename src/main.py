@@ -1,7 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
-from src.seeds import initialize_grid
 from simulate import  simulate_fire
 from analyze import  plot_fire_and_water_influence, describe_data, plot_heatmap_and_boxplot
 
@@ -32,7 +29,7 @@ if __name__ == "__main__":
     # Replace 'None' strings with `None` objects or np.nan (if needed for numerical operations)
     tree_types = np.where(tree_types == 'None', None, tree_types)
 
-    burn_probabilities, results_df = simulate_fire(grid, tree_types, 10, 'E', 1, True,'winter')
+    burn_probabilities, results_df = simulate_fire(grid, tree_types, 10, 'E', 1, True,None)
     print(results_df)
 
     output_file = "data/burn_probabilities.txt"

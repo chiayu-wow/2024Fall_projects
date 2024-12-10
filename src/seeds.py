@@ -2,6 +2,42 @@ import numpy as np
 
 def initialize_grid(rows, cols, water_body_ratio=0.1, fire_location=(25, 25), num_water_bodies=10, bush_ratio=0.05,
                     nums_of_busharea=4):
+    """
+        Initializes a grid representing a forest ecosystem with various elements like trees, bushes,
+        water bodies, and a fire starting point. The grid is populated based on the specified parameters.
+
+        Parameters:
+        -----------
+        rows : int
+            The number of rows in the grid.
+        cols : int
+            The number of columns in the grid.
+        water_body_ratio : float, optional
+            The ratio of grid cells to be designated as water bodies. Default is 0.1 (10%).
+        fire_location : tuple of int, optional
+            The (row, column) coordinates where the fire starts. Default is (25, 25).
+        num_water_bodies : int, optional
+            The number of distinct water bodies to create. Default is 10.
+        bush_ratio : float, optional
+            The proportion of tree cells that will be converted into bushes. Default is 0.05 (5% of trees).
+        nums_of_busharea : int, optional
+            The number of separate bush areas to create. Default is 4.
+
+        Returns:
+        --------
+        grid : numpy.ndarray
+            A 2D grid representing the forest with the following cell values:
+            - 0: Empty cell
+            - 1: Tree
+            - 2: Fire start location
+            - 3: Water body
+            - 5: Bush
+        tree_types : numpy.ndarray
+            A 2D array of the same shape as `grid`, containing the types of trees or bushes for cells with trees:
+            - "pine", "oak", or "willow" for tree cells
+            - "bush" for bush cells
+            - None for non-tree/non-bush cells
+    """
     # Initialize grid: 0 = empty, 1 = tree
     grid = np.random.choice([0, 1], size=(rows, cols), p=[0.15, 0.85])  # 15% empty, 85% plants
     grid[fire_location] = 2  # Fire start location

@@ -4,6 +4,28 @@ import numpy as np
 from data import  tree_colors
 
 def plot_fire(grid, tree_types, hours):
+    """
+       Visualize the fire spread simulation with a color-coded grid.
+
+       Parameters:
+       -----------
+       grid : np.ndarray
+           2D array representing the simulation grid, where:
+           - 1 represents tree cells.
+           - 2 represents fire cells.
+           - 3 represents water cells.
+           - 4 represents burnt cells.
+           - 5 represents areas with reduced fire spread.
+           - Any other value represents empty land.
+       tree_types : np.ndarray
+           2D array representing the type of trees at each grid position.
+           Each tree type corresponds to a predefined color in `tree_colors`.
+       hours : int
+           The number of hours elapsed in the simulation, used in the plot title.
+
+       Returns: None
+
+    """
     # Initialize grid for colored visualization
     rows, cols = grid.shape
     grid_colored = np.zeros((rows, cols, 3), dtype=int)  # RGB color grid
