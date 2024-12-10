@@ -24,7 +24,7 @@ if __name__ == "__main__":
         data = file.readlines()
 
     grid = np.array([list(map(int, line.split())) for line in data])
-    ''' 
+
     with open('data_tree_types.txt', 'r') as file:
         data = file.readlines()
 
@@ -32,10 +32,10 @@ if __name__ == "__main__":
     # Replace 'None' strings with `None` objects or np.nan (if needed for numerical operations)
     tree_types = np.where(tree_types == 'None', None, tree_types)
 
-    burn_probabilities = simulate_fire(grid, tree_types, 1.0, 'W')
+    burn_probabilities, results_df = simulate_fire(grid, tree_types, 20, 'E', 1)
+    print(results_df)
 
-
-    output_file = "burn_probabilities_summer.txt"
+    output_file = "burn_probabilities.txt"
     with open(output_file, "w") as file:
         rows, cols = burn_probabilities.shape
         for r in range(rows):
@@ -43,7 +43,7 @@ if __name__ == "__main__":
             file.write(row_data + "\n")
 
 
-    
+
     file_path = 'burn_probabilities.txt'  # Replace with your file path
     data = np.loadtxt(file_path)
 
@@ -55,7 +55,7 @@ if __name__ == "__main__":
     burn_probabilities = data[:2500].reshape(50, 50)
 
     plot_fire_and_water_influence(grid, burn_probabilities)
-    '''
+
     file_path = 'burn_probabilities_summer.txt'  # Replace with your file path
     data = np.loadtxt(file_path)
 

@@ -4,6 +4,8 @@ from data import tree_flammability
 from data import tree_burn_rates
 from plot import plot_fire
 from scipy.ndimage import distance_transform_edt
+import pandas as pd
+
 
 def calculate_humidity_and_temperature(grid):
     rows, cols = grid.shape
@@ -50,8 +52,10 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=40):
     rows, cols = grid.shape
     burn_counts = np.zeros_like(grid, dtype=float)  # Tracks burn occurrences for each cell
     hours = 0
+    simulation_results = []  # To store results of each simulation
 
     # Set wind speed and direction weights
+    # Max wind speed is 1, min is 0
     if wind_speed < 1:
         tailwind = 1
         against_wind = 1
@@ -71,6 +75,7 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=40):
         grid_copy = grid.copy()
         cooldowns = np.zeros_like(grid, dtype=float)
         hours = 0
+        total_burned_area = 0  # Tracks the total burned area in this simulation
 
         while True:
             if np.sum(grid_copy == 2) == 0:  # No fire left
@@ -92,9 +97,10 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=40):
                                 burn_rate = tree_burn_rates[tree_type]
 
                                 wind_factor = NZ[i]
-                                adjusted_burn_rate = burn_rate * (1 + 0.5 * wind_speed * wind_factor)
+                                adjusted_burn_rate = burn_rate * (1 + wind_factor)
                                 burn_probability = flammability * (1 - humidities[nr, nc]) * (
-                                    1 + (temperatures[nr, nc] - 25) / 100)
+                                        1 + (temperatures[nr, nc] - 25) / 100) * (
+                                                               1 + wind_factor / 5)  # Wind amplifies burn probability
 
                                 if np.random.random() < burn_probability:
                                     new_grid[nr, nc] = 2  # Ignite cell
@@ -104,12 +110,32 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=40):
                         new_grid[r, c] = 4
                         burn_counts[r,c] += 1
                         cooldowns[r, c] = 0
+                        total_burned_area += 1  # Increment burned area count
 
             cooldowns = np.maximum(0, cooldowns - 1)
             grid_copy = new_grid
             plot_fire(grid_copy, tree_types, hours)
             hours += 1
 
+        # Store results for this simulation
+        simulation_results.append({
+            "simulation": sim + 1,
+            "burned_area": total_burned_area,
+            "duration": hours
+        })
+
+    # Convert results to a DataFrame for analysis
+    results_df = pd.DataFrame(simulation_results)
+
     # Calculate burn probabilities
     burn_probabilities = burn_counts / simulations
-    return burn_probabilities
+
+    # Plot burn probabilities heatmap
+    plt.figure(figsize=(10, 5))
+    plt.title("Burn Probabilities Heatmap")
+    plt.imshow(burn_probabilities, cmap="hot", interpolation="nearest")
+    plt.colorbar(label="Burn Probability")
+    plt.show()
+
+    return burn_probabilities, results_df
+

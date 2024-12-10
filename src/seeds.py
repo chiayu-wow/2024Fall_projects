@@ -1,7 +1,8 @@
 import numpy as np
+from conda.common.compat import NoneType
 
 
-def initialize_grid(rows, cols, water_body_ratio=0.2, fire_location=(25, 25), num_water_bodies=2, bush_ratio=0.3,
+def initialize_grid(rows, cols, water_body_ratio=0.1, fire_location=(25, 25), num_water_bodies=10, bush_ratio=0.05,
                     nums_of_busharea=4):
     # Initialize grid: 0 = empty, 1 = tree
     grid = np.random.choice([0, 1], size=(rows, cols), p=[0.15, 0.85])  # 15% empty, 85% plants
