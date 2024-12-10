@@ -3,14 +3,22 @@ import numpy as np
 from data import tree_flammability
 from data import tree_burn_rates
 from plot import plot_fire
-from scipy.ndimage import distance_transform_edt
 import pandas as pd
 
-
-def calculate_humidity_and_temperature(grid):
+def calculate_humidity_and_temperature(grid ,season = None):
     rows, cols = grid.shape
-    humidities = np.full((rows, cols), 0.1)  # Initialize humidity grid with 20% (0.2) for all cells
-    temperatures = np.full((rows, cols), 30)  # Initialize temperature grid with 25°C
+
+    if season == 'summer':
+        print('Now is Summer')
+        humidities = np.full((rows, cols), 0.1)
+        temperatures = np.full((rows, cols), 30)
+    elif season == 'winter':
+        print('Now is Winter')
+        humidities = np.full((rows, cols), 0.4)
+        temperatures = np.full((rows, cols), 12)
+    else:
+        humidities = np.full((rows, cols), 0.2)
+        temperatures = np.full((rows, cols), 24)  # Initialize temperature grid with 25°C
 
     # Update humidity based on proximity to water (grid value 3)
     for i in range(rows):
@@ -48,10 +56,9 @@ def calculate_humidity_and_temperature(grid):
     return humidities, temperatures  # Return both the humidity and temperature grids
 
 
-def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=40):
+def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=1, wind_affected = True, season = None):
     rows, cols = grid.shape
     burn_counts = np.zeros_like(grid, dtype=float)  # Tracks burn occurrences for each cell
-    hours = 0
     simulation_results = []  # To store results of each simulation
 
     # Set wind speed and direction weights
@@ -83,7 +90,7 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=40):
                 break
 
             # Update humidity and temperature
-            humidities, temperatures = calculate_humidity_and_temperature(grid_copy)
+            humidities, temperatures = calculate_humidity_and_temperature(grid_copy, season)
             new_grid = grid_copy.copy()
 
             for r in range(rows):
@@ -97,7 +104,9 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=40):
                                 burn_rate = tree_burn_rates[tree_type]
 
                                 wind_factor = NZ[i]
-                                adjusted_burn_rate = burn_rate * (1 + wind_factor)
+
+                                adjusted_burn_rate = burn_rate * (1 + wind_factor) if wind_affected else burn_rate
+                                print(adjusted_burn_rate, burn_rate)
                                 burn_probability = flammability * (1 - humidities[nr, nc]) * (
                                         1 + (temperatures[nr, nc] - 25) / 100) * (
                                                                1 + wind_factor / 5)  # Wind amplifies burn probability

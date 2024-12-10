@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import distance_transform_edt
 
-
 def plot_fire_and_water_influence(grid, burn_probabilities):
     # Water cells (grid == 3)
     water_cells = (grid == 3)
@@ -28,8 +27,8 @@ def plot_fire_and_water_influence(grid, burn_probabilities):
     ax.set_ylabel("Row Index")
     cbar1 = plt.colorbar(img1, ax=ax)
     cbar1.set_label("Burn Probability")
-    ax.contour(water_cells, colors='blue', linewidths=0.5, linestyles='dashed', label="Water Bodies")
-    ax.legend(["Water Bodies"])
+    # Contour plot of water cells
+    ax.legend(['Water Bodies'], loc='best')
 
     # Plot 2: Distance to Water Heatmap
     ax = axes[1]
@@ -39,8 +38,8 @@ def plot_fire_and_water_influence(grid, burn_probabilities):
     ax.set_ylabel("Row Index")
     cbar2 = plt.colorbar(img2, ax=ax)
     cbar2.set_label("Distance to Water (Cells)")
-    ax.contour(water_cells, colors='blue', linewidths=0.5, linestyles='dashed', label="Water Bodies")
-    ax.legend(["Water Bodies"])
+    # Contour plot of water cells
+    ax.legend(['Water Bodies'], loc='best')
 
     # Plot 3: Boxplot and Statistical Analysis
     ax = axes[2]
