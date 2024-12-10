@@ -30,7 +30,7 @@ if __name__ == "__main__":
     tree_types = np.where(tree_types == 'None', None, tree_types)
 
     burn_probabilities, results_df = simulate_fire(grid, tree_types, 10, 'E', 1, True,None)
-    print(results_df)
+
 
     output_file = "data/burn_probabilities.txt"
     with open(output_file, "w") as file:
