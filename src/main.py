@@ -1,11 +1,17 @@
 import numpy as np
 from simulate import  simulate_fire
 from functions import  plot_fire_and_water_influence, describe_data, plot_heatmap_and_boxplot
+from functions import clear_and_set_fire
+from functions import find_closest_location
+from functions import simulate_multiple_starts
+from functions import compare_bush_non_bush
+from functions import compare_wind_speeds
 from seeds import initialize_grid
 
 # 主程式
 if __name__ == "__main__":
     rows, cols = 50,50  # 網格尺寸
+    # generate grip map
     '''
     grid, tree_types = initialize_grid(rows, cols, 0.05)
     
@@ -18,6 +24,7 @@ if __name__ == "__main__":
             file.write(" ".join(map(lambda x: str(x) if x is not None else "None", row)) + "\n")
 
     '''
+    # read grip map
     with open('data/data_grid.txt', 'r') as file:
         data = file.readlines()
 

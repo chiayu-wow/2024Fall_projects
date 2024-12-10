@@ -29,5 +29,5 @@ if __name__ == "__main__":
     data = np.loadtxt(file_path)
 
     # 匯出結果為 CSV
-    combined_results.to_csv("wind_speed_comparison_results_0.csv", index=False)
+    combined_results.to_csv("wind_speed_comparison_results_test.csv", index=False)
     print("Simulation results saved to 'wind_speed_comparison_results_0.csv'")
