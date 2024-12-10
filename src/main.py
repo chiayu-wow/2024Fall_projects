@@ -1,6 +1,6 @@
 import numpy as np
 from simulate import  simulate_fire
-from analyze import  plot_fire_and_water_influence, describe_data, plot_heatmap_and_boxplot
+from functions import  plot_fire_and_water_influence, describe_data, plot_heatmap_and_boxplot
 from seeds import initialize_grid
 
 # 主程式
