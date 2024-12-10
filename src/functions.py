@@ -1,5 +1,7 @@
+import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import distance_transform_edt
+from plot import  create_heatmap, plot_single_heatmap
 from simulate import simulate_fire
 import numpy as np
 import pandas as pd
@@ -128,47 +130,28 @@ def compare_bush_non_bush(grid, tree_types, wind_speed=0, wind_direction="W"):
 # Hypothesis 2 functions
 def plot_fire_and_water_influence(grid, burn_probabilities):
     """
-        Visualize the relationship between water proximity and burn probabilities in a grid-based fire simulation.
+    Visualize the relationship between water proximity and burn probabilities in a grid-based fire simulation.
 
-        Parameters:
-        -----------
-        grid : numpy.ndarray
-            A 2D array representing the simulation grid. Each cell has an integer value indicating its type:
-            - 3: Water
-            - Other values can represent various terrain types (e.g., trees, empty land, etc.).
-        burn_probabilities : numpy.ndarray
-            A 2D array of the same shape as `grid` containing the burn probabilities for each cell.
+    Parameters:
+    -----------
+    grid : numpy.ndarray
+        A 2D array representing the simulation grid. Each cell has an integer value indicating its type:
+        - 3: Water
+        - Other values can represent various terrain types (e.g., trees, empty land, etc.).
+    burn_probabilities : numpy.ndarray
+        A 2D array of the same shape as `grid` containing the burn probabilities for each cell.
 
-        Functionality:
-        --------------
-        1. Identifies water cells (value 3 in `grid`) and calculates the distance of every cell to the nearest water cell.
-        2. Adjusts the burn probabilities based on proximity to water:
-           - Burn probabilities decrease with proximity to water, with a maximum influence distance of 5 cells.
-        3. Generates three visualizations:
-           - Heatmap of initial burn probabilities.
-           - Heatmap of distances to water.
-           - Boxplot comparing burn probabilities of cells close to water (distance ≤ 5) and far from water (distance > 5).
+    Functionality:
+    --------------
+    1. Identifies water cells (value 3 in `grid`) and calculates the distance of every cell to the nearest water cell.
+    2. Adjusts the burn probabilities based on proximity to water:
+       - Burn probabilities decrease with proximity to water, with a maximum influence distance of 5 cells.
+    3. Generates visualizations:
+       - Heatmap of initial burn probabilities.
+       - Heatmap of distances to water.
+       - Boxplot comparing burn probabilities of cells close to water (distance ≤ 5) and far from water (distance > 5).
 
-        Visualizations:
-        ---------------
-        - **Burn Probabilities Heatmap**:
-            Displays the initial burn probabilities for all cells using a "hot" color map.
-        - **Distance to Water Heatmap**:
-            Illustrates the calculated distances to the nearest water cell for each grid cell using a "cool" color map.
-        - **Boxplot of Burn Probabilities**:
-            Compares the distributions of burn probabilities for cells near and far from water.
-
-        Console Output:
-        ---------------
-        Prints summary statistics for burn probabilities of:
-        - Cells close to water (distance ≤ 5).
-        - Cells far from water (distance > 5).
-        Statistics include:
-        - Mean
-        - Median
-        - Standard deviation
-
-        Returns: None
+    Returns: None
     """
 
     water_cells = (grid == 3)
@@ -176,39 +159,21 @@ def plot_fire_and_water_influence(grid, burn_probabilities):
     # Calculate the distance to the nearest water
     distances_to_water = distance_transform_edt(~water_cells)
 
-    # Set the maximum influence distance for water and adjust burn probabilities
-    max_influence_distance = 5
-    influence_factor = np.clip(1 - (distances_to_water / max_influence_distance), 0, 1)
-
     # Create visualizations
-    fig, axes = plt.subplots(1, 3, figsize=(18, 6))
-
     # Plot 1: Burn Probabilities Heatmap
-    ax = axes[0]
-    img1 = ax.imshow(burn_probabilities, cmap="hot", interpolation="nearest")
-    ax.set_title("Burn Probabilities Heatmap")
-    ax.set_xlabel("Column Index")
-    ax.set_ylabel("Row Index")
-    cbar1 = plt.colorbar(img1, ax=ax)
-    cbar1.set_label("Burn Probability")
-    # Contour plot of water cells
-    ax.legend(['Water Bodies'], loc='best')
+    plot_single_heatmap(
+        burn_probabilities, "hot", "Burn Probabilities Heatmap", "Column Index", "Row Index", "Burn Probability"
+    )
 
     # Plot 2: Distance to Water Heatmap
-    ax = axes[1]
-    img2 = ax.imshow(distances_to_water, cmap="cool", interpolation="nearest")
-    ax.set_title("Distance to Water Heatmap")
-    ax.set_xlabel("Column Index")
-    ax.set_ylabel("Row Index")
-    cbar2 = plt.colorbar(img2, ax=ax)
-    cbar2.set_label("Distance to Water (Cells)")
-    # Contour plot of water cells
-    ax.legend(['Water Bodies'], loc='best')
+    plot_single_heatmap(
+        distances_to_water, "cool", "Distance to Water Heatmap", "Column Index", "Row Index", "Distance to Water (Cells)"
+    )
 
     # Plot 3: Boxplot and Statistical Analysis
-    ax = axes[2]
+    fig, ax = plt.subplots(figsize=(8, 6))
 
-    # Extract burn probabilities for cells near water (distance <= 5 cells) and far from water (distance > 5)
+    # Extract burn probabilities for cells near water (distance ≤ 5 cells) and far from water (distance > 5)
     close_to_water = burn_probabilities[distances_to_water <= 5]
     far_from_water = burn_probabilities[distances_to_water > 5]
 
@@ -230,7 +195,7 @@ def plot_fire_and_water_influence(grid, burn_probabilities):
         'std': np.std(far_from_water)
     }
 
-    print("Statistics for cells close to water (distance <= 5 cells):")
+    print("Statistics for cells close to water (distance ≤ 5 cells):")
     print(f"Mean: {stats_close['mean']:.4f}, Median: {stats_close['median']:.4f}, Std: {stats_close['std']:.4f}")
 
     print("\nStatistics for cells far from water (distance > 5 cells):")
@@ -330,64 +295,117 @@ def describe_data(data, season):
 
 def plot_heatmap_and_boxplot(winter_data, summer_data, grid_size=(50, 50)):
     """
-        Plots a heatmap of burn probabilities for winter and summer seasons, and a
-        boxplot to compare the distributions of burn probabilities between the two seasons.
+    Plots a heatmap of burn probabilities for winter and summer seasons, and a
+    boxplot to compare the distributions of burn probabilities between the two seasons.
 
-        Parameters:
-        -----------
-        winter_data : numpy.ndarray or list
-            A 1D array or list containing burn probabilities for the winter season.
-            It will be reshaped into a 2D grid based on `grid_size`.
-        summer_data : numpy.ndarray or list
-            A 1D array or list containing burn probabilities for the summer season.
-            It will be reshaped into a 2D grid based on `grid_size`.
-        grid_size : tuple of int, optional
-            The dimensions (rows, columns) of the grid used for reshaping the input data.
-            Default is (50, 50).
+    Parameters:
+    -----------
+    winter_data : numpy.ndarray or list
+        A 1D array or list containing burn probabilities for the winter season.
+        It will be reshaped into a 2D grid based on `grid_size`.
+    summer_data : numpy.ndarray or list
+        A 1D array or list containing burn probabilities for the summer season.
+        It will be reshaped into a 2D grid based on `grid_size`.
+    grid_size : tuple of int, optional
+        The dimensions (rows, columns) of the grid used for reshaping the input data.
+        Default is (50, 50).
 
-        Functionality:
-        --------------
-        - Creates two heatmaps:
-            - One for winter burn probabilities.
-            - One for summer burn probabilities.
-        - Displays the heatmaps with colorbars and appropriate labels.
-        - Creates a boxplot to compare the distributions of burn probabilities
-          between winter and summer seasons.
-
-        Outputs:
-        --------
-        - A figure with two subplots displaying heatmaps for winter and summer data.
-        - A separate figure displaying a boxplot comparing burn probabilities for
-          winter and summer.
+    Outputs:
+    --------
+    - A figure with two subplots displaying heatmaps for winter and summer data.
+    - A separate figure displaying a boxplot comparing burn probabilities for
+      winter and summer.
     """
-    # 1. Heatmap of Burn Probabilities
-    fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+    # Reshape data
+    winter_grid = np.array(winter_data).reshape(grid_size)
+    summer_grid = np.array(summer_data).reshape(grid_size)
 
-    # Winter Heatmap
-    ax = axes[0]
-    ax.imshow(winter_data.reshape(grid_size), cmap='hot', interpolation='nearest')
-    ax.set_title("Winter Season Burn Probabilities")
-    ax.set_xlabel("Column Index")
-    ax.set_ylabel("Row Index")
-    cbar = plt.colorbar(ax.imshow(winter_data.reshape(grid_size), cmap='hot', interpolation='nearest'), ax=ax)
-    cbar.set_label("Burn Probability")
+    # 1. Heatmaps
+    plot_single_heatmap(winter_grid, 'hot', "Winter Season Burn Probabilities", "Column Index", "Row Index", "Burn Probability")
+    plot_single_heatmap(summer_grid, 'hot', "Summer Season Burn Probabilities", "Column Index", "Row Index", "Burn Probability")
 
-    # Summer Heatmap
-    ax = axes[1]
-    ax.imshow(summer_data.reshape(grid_size), cmap='hot', interpolation='nearest')
-    ax.set_title("Summer Season Burn Probabilities")
-    ax.set_xlabel("Column Index")
-    ax.set_ylabel("Row Index")
-    cbar = plt.colorbar(ax.imshow(summer_data.reshape(grid_size), cmap='hot', interpolation='nearest'), ax=ax)
-    cbar.set_label("Burn Probability")
+    # 2. Boxplot
+    winter_data_flat = np.array(winter_data).flatten()
+    summer_data_flat = np.array(summer_data).flatten()
 
+    fig, ax = plt.subplots(figsize=(8, 6))
+    ax.boxplot([winter_data_flat, summer_data_flat], labels=["Winter", "Summer"], showfliers=False)
+    ax.set_title("Burn Probability Distribution")
+    ax.set_ylabel("Burn Probability")
+    plt.grid(axis='y', linestyle='--', alpha=0.7)  # Optional: Add a grid to the boxplot
     plt.tight_layout()
     plt.show()
 
-    # 2. Boxplot of Burn Probabilities
-    # Reshaping the 1D data into 2D to pass into boxplot
-    fig, ax = plt.subplots(figsize=(8, 6))
-    ax.boxplot([winter_data.flatten(), summer_data.flatten()], labels=["Winter", "Summer"])
-    ax.set_title("Burn Probability Distribution")
-    ax.set_ylabel("Burn Probability")
-    plt.show()
+def simulate_multiple_starts(grid, tree_types, start_locations, wind_speed=0, wind_direction="W"):
+    """
+    Simulates multiple fire starting points, recording burned area and time for each.
+
+    :param grid: numpy array, simulation grid
+    :param tree_types: numpy array, tree type grid
+    :param start_locations: list of tuples, list of fire point coordinates
+    :param wind_speed: float, wind speed
+    :param wind_direction: str, wind direction (N, E, S, W)
+    :return: pandas DataFrame, combined results for all simulations
+    """
+    all_results = []  # List to store DataFrame for each simulation
+
+    for start_point in start_locations:
+        # Set a new fire point
+        grid_with_fire = clear_and_set_fire(grid, start_point)
+
+        # Simulate
+        _, simulation_results = simulate_fire(grid_with_fire, tree_types, wind_speed, wind_direction, simulations=1)
+
+        # Append the DataFrame directly to the list
+        all_results.append(simulation_results)
+
+        # Simulate only once, then exit
+        break  # Simulate for only one fire point
+
+    # Combine all results into a single DataFrame
+    combined_results = pd.concat(all_results, ignore_index=True)
+    return combined_results
+
+def compare_bush_non_bush(grid, tree_types, wind_speed=0, wind_direction="W"):
+    """
+    Compares simulation results for fire points starting in bush and non-bush areas.
+
+    :param grid: numpy array, simulation grid
+    :param tree_types: numpy array, tree type grid
+    :param wind_speed: float, wind speed
+    :param wind_direction: str, wind direction (N, E, S, W)
+    :return: pandas DataFrame, combined results for Bush and Non-Bush simulations
+    """
+    # Define the center point
+    center_point = (25, 25)
+
+    # Find the closest Bush and Non-Bush fire points to the center
+    closest_bush = find_closest_location(grid, tree_types, target_type="bush", center=center_point)
+    closest_non_bush = find_closest_location(grid, tree_types, target_type="non_bush", center=center_point)
+
+    # Initialize result variables
+    results_bush = pd.DataFrame()
+    results_non_bush = pd.DataFrame()
+
+    # Bush simulation
+    if closest_bush:
+        print(f"Simulating fire point (Bush): {closest_bush}")
+        results_bush = simulate_multiple_starts(grid, tree_types, [closest_bush], wind_speed=wind_speed,
+                                                wind_direction=wind_direction)
+        results_bush["category"] = "fire_at_bush"  # Add category column
+    else:
+        print("No valid Bush fire point found.")
+
+    # Non-Bush simulation
+    if closest_non_bush:
+        print(f"Simulating fire point (Non-Bush): {closest_non_bush}")
+        results_non_bush = simulate_multiple_starts(grid, tree_types, [closest_non_bush], wind_speed=wind_speed,
+                                                    wind_direction=wind_direction)
+        results_non_bush["category"] = "fire_at_non_bush"  # Add category column
+    else:
+        print("No valid Non-Bush fire point found.")
+
+    # Combine the results into a single DataFrame
+    combined_results = pd.concat([results_bush, results_non_bush], ignore_index=True)
+
+    return combined_results

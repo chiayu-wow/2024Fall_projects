@@ -48,7 +48,8 @@ if __name__ == "__main__":
 
     ## hypothesis 2 simulation ##
     # simulate fire
-    burn_probabilities_02, results_df_02 = simulate_fire(grid, tree_types, 10, 'E', 1, True, None)
+
+    burn_probabilities_02, results_df = simulate_fire(grid, tree_types, 10, 'E', 1, True,'winter')
 
     output_file_02 = "data/burn_probabilities.txt"
     with open(output_file_02, "w") as file:

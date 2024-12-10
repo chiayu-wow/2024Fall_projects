@@ -9,11 +9,9 @@ def calculate_humidity_and_temperature(grid ,season = None):
     rows, cols = grid.shape
 
     if season == 'summer':
-        print('Now is Summer')
         humidities = np.full((rows, cols), 0.1)
         temperatures = np.full((rows, cols), 30)
     elif season == 'winter':
-        print('Now is Winter')
         humidities = np.full((rows, cols), 0.4)
         temperatures = np.full((rows, cols), 12)
     else:
@@ -106,7 +104,6 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=1, w
                                 wind_factor = NZ[i]
 
                                 adjusted_burn_rate = burn_rate * (1 + wind_factor) if wind_affected else burn_rate
-                                print(adjusted_burn_rate, burn_rate)
                                 burn_probability = flammability * (1 - humidities[nr, nc]) * (
                                         1 + (temperatures[nr, nc] - 25) / 100) * (
                                                                1 + wind_factor / 5)  # Wind amplifies burn probability

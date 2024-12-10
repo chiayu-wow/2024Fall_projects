@@ -54,3 +54,55 @@ def plot_fire(grid, tree_types, hours):
     plt.title(f" {hours} hour of Fire Spread")
     plt.pause(0.1)  # Pause to update the plot
     plt.clf()  # Clear the figure for the next plot
+
+def create_heatmap(ax, data, cmap, title, xlabel, ylabel, colorbar_label):
+    """
+    Helper function to create a heatmap visualization.
+
+    Parameters:
+    -----------
+    ax : matplotlib.axes.Axes
+        The axes on which to plot the heatmap.
+    data : numpy.ndarray
+        The data to display in the heatmap.
+    cmap : str
+        The colormap to use for the heatmap.
+    title : str
+        The title of the heatmap.
+    xlabel : str
+        The label for the x-axis.
+    ylabel : str
+        The label for the y-axis.
+    colorbar_label : str
+        The label for the colorbar.
+    """
+    img = ax.imshow(data, cmap=cmap, interpolation="nearest")
+    ax.set_title(title)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    cbar = plt.colorbar(img, ax=ax)
+    cbar.set_label(colorbar_label)
+
+def plot_single_heatmap(data, cmap, title, xlabel, ylabel, colorbar_label):
+    """
+    Plot a single heatmap.
+
+    Parameters:
+    -----------
+    data : numpy.ndarray
+        The data to display in the heatmap.
+    cmap : str
+        The colormap to use for the heatmap.
+    title : str
+        The title of the heatmap.
+    xlabel : str
+        The label for the x-axis.
+    ylabel : str
+        The label for the y-axis.
+    colorbar_label : str
+        The label for the colorbar.
+    """
+    fig, ax = plt.subplots(figsize=(8, 6))
+    create_heatmap(ax, data, cmap, title, xlabel, ylabel, colorbar_label)
+    plt.tight_layout()
+    plt.show()
