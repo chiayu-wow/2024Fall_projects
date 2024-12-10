@@ -7,8 +7,8 @@ from scipy.ndimage import distance_transform_edt
 
 def calculate_humidity_and_temperature(grid):
     rows, cols = grid.shape
-    humidities = np.full((rows, cols), 0.2)  # Initialize humidity grid with 20% (0.2) for all cells
-    temperatures = np.full((rows, cols), 25)  # Initialize temperature grid with 25°C
+    humidities = np.full((rows, cols), 0.1)  # Initialize humidity grid with 20% (0.2) for all cells
+    temperatures = np.full((rows, cols), 30)  # Initialize temperature grid with 25°C
 
     # Update humidity based on proximity to water (grid value 3)
     for i in range(rows):
@@ -46,7 +46,7 @@ def calculate_humidity_and_temperature(grid):
     return humidities, temperatures  # Return both the humidity and temperature grids
 
 
-def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=100):
+def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=40):
     rows, cols = grid.shape
     burn_counts = np.zeros_like(grid, dtype=float)  # Tracks burn occurrences for each cell
     hours = 0
@@ -102,22 +102,14 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=100)
 
                         # Burned-out state
                         new_grid[r, c] = 4
+                        burn_counts[r,c] += 1
                         cooldowns[r, c] = 0
 
             cooldowns = np.maximum(0, cooldowns - 1)
             grid_copy = new_grid
-            burn_counts += (grid_copy == 4)  # Track burn events
             plot_fire(grid_copy, tree_types, hours)
             hours += 1
 
     # Calculate burn probabilities
     burn_probabilities = burn_counts / simulations
-
-    # Plot burn probabilities heatmap
-    plt.figure(figsize=(10, 5))
-    plt.title("Burn Probabilities Heatmap")
-    plt.imshow(burn_probabilities, cmap="hot", interpolation="nearest")
-    plt.colorbar(label="Burn Probability")
-    plt.show()
-
     return burn_probabilities
