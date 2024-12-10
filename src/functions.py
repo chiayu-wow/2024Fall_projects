@@ -67,7 +67,7 @@ def simulate_multiple_starts(grid, tree_types, start_locations, wind_speed=0, wi
         grid_with_fire = clear_and_set_fire(grid, start_point)
 
         # Simulate
-        _, simulation_results = simulate_fire(grid_with_fire, tree_types, wind_speed, wind_direction, simulations=50)
+        _, simulation_results = simulate_fire(grid_with_fire, tree_types, wind_speed, wind_direction, simulations=1)
 
         # Append the DataFrame directly to the list
         all_results.append(simulation_results)
