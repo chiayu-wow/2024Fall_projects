@@ -6,6 +6,48 @@ from plot import plot_fire
 import pandas as pd
 
 def calculate_humidity_and_temperature(grid ,season = None):
+    """
+    Calculate humidity and temperature for a given grid based on the season, proximity to water, and fire.
+
+    Parameters:
+    -----------
+    grid : numpy.ndarray
+        A 2D array representing the simulation grid. Cell values:
+        - 3: Water
+        - 2: Fire
+        - Other: Terrain
+    season : str, optional
+        Season can be 'summer', 'winter', or None (default season).
+
+    Returns:
+    --------
+    tuple of numpy.ndarray
+        - humidities: A 2D array of calculated humidity values.
+        - temperatures: A 2D array of calculated temperature values.
+
+     Examples:
+    ---------
+    >>> import numpy as np
+    >>> grid = np.array([[0, 3, 0], [0, 0, 2], [3, 0, 0]])
+    >>> humidities, temperatures = calculate_humidity_and_temperature(grid, season='summer')
+    >>> humidities  # doctest: +NORMALIZE_WHITESPACE
+    array([[0.46      , 0.8       , 0.41428571],
+           [0.46      , 0.46      , 0.1       ],
+           [0.8       , 0.46      , 0.39333333]])
+    >>> temperatures  # doctest: +NORMALIZE_WHITESPACE
+    array([[30, 33, 35],
+           [30, 35, 37],
+           [28, 35, 35]])
+    >>> humidities, temperatures = calculate_humidity_and_temperature(grid, season='winter')
+    >>> humidities  # doctest: +NORMALIZE_WHITESPACE
+    array([[0.76      , 0.8       , 0.71428571],
+           [0.76      , 0.76      , 0.4       ],
+           [0.8       , 0.76      , 0.69333333]])
+    >>> temperatures  # doctest: +NORMALIZE_WHITESPACE
+    array([[10, 15, 15],
+           [10, 15, 17],
+           [10, 15, 17]])
+    """
     rows, cols = grid.shape
 
     if season == 'summer':
@@ -55,6 +97,37 @@ def calculate_humidity_and_temperature(grid ,season = None):
 
 
 def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=1, wind_affected = True, season = None):
+    """
+        Simulates fire spread on a grid considering tree types, wind speed, wind direction, and season.
+
+        Parameters:
+        -----------
+        grid : numpy.ndarray
+            A 2D array representing the simulation grid. Cell values:
+            - 0: Empty land
+            - 1: Tree (flammable)
+            - 2: Fire (burning)
+            - 3: Water (non-flammable)
+             -5 : bushes
+        tree_types : dict
+            Dictionary mapping tree types to their burn probabilities. For example:
+            `{1: 0.6, 2: 0.8}` where keys are tree types in the grid.
+        wind_speed : float
+            Wind speed in km/h. Higher wind speeds accelerate fire spread.
+        wind_direction : str
+            Wind direction, one of 'N', 'S', 'E', 'W', indicating where the wind is blowing towards.
+        simulations : int, optional
+            Number of simulation iterations to run. Default is 1.
+        wind_affected : bool, optional
+            Whether the wind affects fire spread. Default is True.
+        season : str, optional
+            Season can be 'summer', 'winter', or None. Seasons impact burn probabilities.
+
+        Returns:
+        --------
+        numpy.ndarray
+            The grid after the fire simulation.
+    """
     rows, cols = grid.shape
     burn_counts = np.zeros_like(grid, dtype=float)  # Tracks burn occurrences for each cell
     simulation_results = []  # To store results of each simulation
