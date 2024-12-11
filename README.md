@@ -108,8 +108,8 @@ much slower rate of 5 chains/hour .
 1. Independent variable : ignition point location (bush or non-bush)
 2. Dependent variable : burned area, duration
 3. Controlled variables : tree type, water bodies, humidity, temperature, wind condition
-We run the simulation in two situation each 50 times. one is the ignition point is on bush, and the other is on the forest(willow, oak or pine tree). 
-Afterward, we see how the statistic result varied from this two situation.
+
+We conducted the simulation 50 times for each of two scenarios: one where the ignition point was on a bush, and another where it was in a forest (willow, oak, or pine trees). Subsequently, we analyzed how the statistical results differed between these two scenarios.
 ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_001.png)
 ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_002.png)
 
@@ -135,7 +135,7 @@ Thus, **the hypothesis is not fully supported** based on these simulation result
    - The median burned area for bushland fires is higher than for non-bushland, but the overlap in interquartile ranges indicates that the difference is not as pronounced as hypothesized.
 2. **Box Plot of Duration:**
    - From the duration box plot, the distributions for bushland and non-bushland durations appear largely similar, with some overlap.
-   - The median duration of bushland fire is slightly lower than non-bushland, indicate that bushland fire burned faster. 
+   - The median duration of bushland fires is slightly shorter than that of non-bushland fires, indicating that bushland fires burn more quickly.
 ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_04.png)
 2. **Scatter Plot of Burned Area vs. Duration:**
    - Both categories show a positive correlation between burned area and duration, with bushland fires generally burning slightly more area for comparable durations.
@@ -193,25 +193,34 @@ The statistical analysis supports this conclusion, with cells near the water bod
 1. Independent variable : wind speed 
 2. Dependent variable : burned area, duration
 3. Controlled variables : wind direction,tree type, water bodies, humidity, temperature
-we conduct the hypothesis in 4 kind of wind speed, and see how the burned pattern change. 
+
+We conducted the hypothesis test under four different wind speed conditions to observe how the burn patterns changed.
 
 ### **Burn Probability Heatmap**
 
 ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_01.png)
+
 wind = 0
+
 ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_00.png)
+
 wind = 5
+
 ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_05.png)
+
 wind = 10
+
 ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_10.png)
+
 wind = 20
+
 ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_20.png)
+
 wind = 30
+
 ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_30.png)
 
-as we can see from the changes of burned pattern from no wind(wind speed=0) to strong wind (wind speed=30),
-the fire spread has every direction when there is no wind, it only avoid the water bodies. and when the wind speed is stronger, the burned pattern of the tail wind side is more manifest.
-on the other hand, the against wind side, was less burned as the wind getting stronger.
+As observed from the changes in burn patterns, transitioning from no wind (wind speed = 0) to strong wind (wind speed = 30), the fire spreads in all directions when there is no wind, avoiding only water bodies. However, as the wind speed increases, the burn pattern becomes more pronounced on the downwind side. Conversely, the upwind side shows reduced burning as the wind becomes stronger.
 
 
 ### **Statistical Results**
