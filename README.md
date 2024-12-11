@@ -41,6 +41,7 @@ We simulate the **Mendocino Complex Fire (July 2018)**, the largest wildfire in 
 
 ### **Grid and Burn Rate Design**
 
+A 50×50 grid represents the simulated area, where each cell covers 46 chains (1 chain = 66 feet). This results in a total simulation area of 529,000 acres, slightly larger than the actual event.
 In this simulation, each grid cell represents a **46-chain (1 chain = 66 feet)** square. The decision to set the grid cell size to **46 chains** is based on the burn rate of the fastest-burning vegetation type, **bush**, which spreads at a rate of **46 chains per hour**. By aligning the grid cell size with the burn rate of bush, we ensure that:
 
 - **Fastest Burn Rate (Bush):**  
@@ -48,18 +49,6 @@ In this simulation, each grid cell represents a **46-chain (1 chain = 66 feet)**
 - **Slower Burn Rates (Other Vegetation):**  
    For tree species such as **pine**, **oak**, and **willow**, the burn rate is slower, requiring multiple time steps to fully burn through a single grid cell. This effectively represents their lower flammability and spread rates in real-world conditions.
 
-### **Burn Rates by Vegetation Type**
-The simulation incorporates different burn rates for vegetation types to reflect their varying levels of flammability:
-
-```python
-tree_burn_rates = {
-    "bush": 46 / 46,  # Bush: Burns at 46 chains/hour (~1 cell/hour), fastest burning type
-    "pine": 20 / 46,  # Pine: Slower, requires more time to burn through a cell
-    "oak": 15 / 46,   # Oak: Moderate burn rate
-    "willow": 10 / 46, # Willow: Slowest burn rate
-    None: 0.0         # Empty or non-flammable areas
-}
-```
 
 ### **Propagation Logic**
 - The fire starts in the **center** of the grid.  
@@ -77,7 +66,9 @@ tree_burn_rates = {
 
 1. **Fire Spread Rate:**  
    - Each cell represents a distance of **46 chains** (~1 mile).  
-   - Burn rate: **1 chain per hour**.  
+   - Burn rate: according to the Northwest Fire Science Consortium, the rate of fire move across the landscape is **1 chain per hour**.  and when wildfire burn on bush, the rate become 46 chain per hour, burning through dense ponderosa pine with heavy surface fuels spreads at a
+much slower rate of 5 chains/hour .
+
 
 2. **Tree Types:**  
    - **Flammability:** Varies by species (e.g., pine, oak, willow, bush).  
@@ -114,13 +105,52 @@ tree_burn_rates = {
 ## Hypothesis 1
 ### Hypothesis : The burned area is expected to increase by approximately 50% when the ignition point originates from bushland compared to forested areas composed of willow, pine, and oak trees.
 The impact of the ignition point location (vegetation type) on the burning area and duration of wildfires .... 
-1. Independent variable :
-2. Dependent variable :
-3. Controlled variables :
+1. Independent variable : fire spread rate, burned probability(randomize)
+2. Dependent variable : burned area, duration
+3. Controlled variables : tree type, water bodies, humidity, temperature, wind condition
+We run the simulation in two situation each 50 times. one is the ignition point is on bush, and the other is on the forest(willow, oak or pine tree). 
+Afterward, we see how the statistic result varied from this two situation.
 ### Result
-(plot)
-(analyze description)
-(conclusion)
+
+From the simulation results:
+
+- **Burned Area Percentage:**
+  - **Fire at Bushland:** Mean = 30.58%, Std = 17.68%
+  - **Fire at Non-Bushland:** Mean = 26.28%, Std = 21.12%
+  
+- **Percentage Increase in Burned Area:**
+  \[
+  \text{Increase} = \frac{\text{Bush Mean Burned Area} - \text{Non-Bush Mean Burned Area}}{\text{Non-Bush Mean Burned Area}} \times 100\%
+  \]
+  Substituting the values:
+  \[
+  \text{Increase} = \frac{30.58 - 26.28}{26.28} \times 100\% = 16.37\%
+  \]
+
+#### **Conclusion of Burned Area Comparison**
+The burned area from fires ignited in bushland is, on average, **16.37% larger** than that from fires in non-bushland areas. This is significantly smaller than the hypothesized **50% increase**.  
+
+Thus, **the hypothesis is not fully supported** based on these simulation results. While fires in bushland do tend to burn larger areas, the difference is more modest than expected.
+
+---
+
+### **Visual Evidence**
+1. **Box Plot of Burned Area:**
+   - The median burned area for bushland fires is higher than for non-bushland, but the overlap in interquartile ranges indicates that the difference is not as pronounced as hypothesized.
+
+2. **Scatter Plot of Burned Area vs. Duration:**
+   - Both categories show a positive correlation between burned area and duration, with bushland fires generally burning slightly more area for comparable durations.
+
+---
+
+### **Possible Reasons for Discrepancy**
+1. **Randomness in Fire Spread:**
+   - The Monte Carlo simulation introduces stochastic elements, which may have reduced the observed differences between the two categories.
+
+---
+
+### **Conclusion**
+The hypothesis that fires in bushland result in a **50% larger burned area** compared to non-bushland is **not supported** by this analysis. Instead, the actual increase in burned area is approximately **16.37%**. This suggests that while bushland ignition does increase fire spread, the effect is less pronounced than initially expected. Further analysis incorporating additional environmental variables may provide deeper insights.
 
 ## Hypothesis 2
 ### Hypothesis : 
