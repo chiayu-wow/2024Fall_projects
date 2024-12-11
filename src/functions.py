@@ -232,20 +232,33 @@ def compare_wind_speeds(grid, tree_types, wind_speeds, wind_direction):
     :param grid: numpy array, simulation grid
     :param tree_types: numpy array, tree type grid
     :param wind_speeds: list of float, wind speeds to test
-    :param wind_direction: str, wind direction (e.g., 'N')
-    :return: pandas DataFrame, combined results for all wind speed conditions
+    :param wind_direction: str, wind direction (e.g., 'N', 'E', 'S', 'W')
+    :return: tuple containing:
+        - pandas DataFrame, combined results for all wind speed conditions
+        - numpy array, burn probabilities from the last simulation
+
+    Example usage:
+    >>> grid = np.zeros((5, 5))
+    >>> grid[2, 2] = 5  # Set a bush in the middle
+    >>> tree_types = np.array([['bush'] * 5] * 5)
+    >>> wind_speeds = [0, 1, 2]
+    >>> wind_direction = "E"
+    >>> results, burn_probabilities = compare_wind_speeds(grid, tree_types, wind_speeds, wind_direction)
+    >>> isinstance(results, pd.DataFrame)
+    True
+    >>> results["wind_speed"].tolist() == [0, 1, 2]
+    True
+    >>> isinstance(burn_probabilities, np.ndarray)
+    True
     """
     all_results = []  # Store results from all conditions
 
     for wind_speed in wind_speeds:
-        print(f"Simulating for wind speed: {wind_speed} m/s, direction: {wind_direction}")
-
         # Clear and set fire in the middle of the grid
         grid_with_fire = clear_and_set_fire(grid, (grid.shape[0] // 4, grid.shape[1] // 2))
 
         # Simulate fire
-        burn_probabilities, simulation_results = simulate_fire(grid_with_fire, tree_types, wind_speed, wind_direction,
-                                                               1)
+        burn_probabilities, simulation_results = simulate_fire(grid_with_fire, tree_types, wind_speed, wind_direction, 1)
 
         # Add wind speed and direction to results
         simulation_results["wind_speed"] = wind_speed
@@ -257,6 +270,7 @@ def compare_wind_speeds(grid, tree_types, wind_speeds, wind_direction):
     # Combine all results into a single DataFrame
     combined_results = pd.concat(all_results, ignore_index=True)
     return combined_results, burn_probabilities
+
 
 
 # Validation functions
