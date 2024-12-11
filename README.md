@@ -164,27 +164,50 @@ The hypothesis that fires in bushland result in a **50% larger burned area** com
 (conclusion)
 
 ## Hypothesis 3
-### Hypothesis : 
-(explanation)
+### Hypothesis : The impact of humidity on the likelihood of wildfire spread in areas surrounding bodies of water
+
 1. Independent variable :
+   a. - Humidity levels in the surrounding area (e.g., high, medium, low humidity). This is manipulated to observe its effect on wildfire spread.
 2. Dependent variable :
-3. Controlled variables :
+   a. - Likelihood of wildfire spread to areas surrounding bodies of water. This outcome is measured and depends on humidity levels.
+5. Controlled variables :
+   a. - Proximity to bodies of water:** The distance between the wildfire and the water body remains constant in the simulation.
+   b. - Vegetation type and density:** Kept consistent in all areas.
+   c. - Initial fire size and location:** The starting conditions for the wildfire are identical across scenarios.
+
+### **Color Scale:**
+
+- **Red:** High fire probability
+- **Yellow:** Medium fire probability
+- **Black:** Low fire probability
+- **Blue Boxes:** Denote water bodies, which typically act as natural fire barriers.
+
 ### Result
-(plot)
-(analyze description)
-(conclusion)
+
+The heatmap shows that areas near water bodies are less likely to experience fire spread. The fire probability near the water body is 0, indicating that increased humidity around water bodies significantly reduces the likelihood of wildfire spread.
+
+
+The statistical analysis supports this conclusion, with cells near the water body showing a lower mean fire probability. The median fire probability near the water body is 0, much lower than the median fire probability of cells farther from the water. This demonstrates that increased humidity near water bodies plays a significant role in reducing wildfire spread.
 
 ## Validation 1
-### Validation : 
-(what real world senario is going to validate)
-(explanation)
+### Validation : The impact of seasons (humidity & temperature) on wildfire spread
+
 1. Independent variable :
+   a. - Humidity levels (varied by season)
+   b. - Temperature levels (varied by season)
 2. Dependent variable :
+   a. - Likelihood of fire ignition
 3. Controlled variables :
+   a. - Wind speed and direction (constant)
+   b. - Vegetation type and density (constant)
+   c. - Initial fire size and location (identical)
+   
 ### Result
-(plot)
-(analyze description)
-(conclusion)
+# Winter vs. Summer Heatmaps
+
+In winter, most areas remain unaffected, with only the fire’s starting point showing slightly elevated burn probabilities. In contrast, the summer heatmap shows widespread fire propagation, with most regions having nearly 100% burn probability.
+
+Statistical comparisons reveal the mean fire spread is much higher in summer, and the median fire spread jumps from 0 in winter to 75 in summer. These findings confirm that seasonal variations, particularly temperature and humidity, significantly affect wildfire spread.
 
 ## Conclusion
 1. ...
