@@ -304,4 +304,4 @@ Statistical comparisons reveal the mean fire spread is much higher in summer, an
 - [Wildfire report](https://www.ncei.noaa.gov/access/monitoring/monthly-report/fire/202401)
 - [Mendocino National Forest](https://www.fs.usda.gov/detailfull/mendocino/learning/nature-science/?cid=stelprdb5143325)
 - [Wind speed rule](https://annforsci.biomedcentral.com/articles/10.1007/s13595-019-0829-8)
-- [Beaufort Wind Scale](https://www.weather.gov/mfl/beaufort)
+- [Beaufort Wind Scale](https://www.weather.gov/mfl/beaufort) 
