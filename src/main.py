@@ -4,6 +4,24 @@ from functions import compare_bush_non_bush, plot_fire_and_water_influence, comp
     plot_heatmap_and_boxplot
 from seeds import initialize_grid
 
+"""
+
+597PR  Final Project - Monte Carlo Simulation of Wildfire Propagation in Forested Areas
+
+######### Contribution ##########
+# Name: Chia-Yu Wang
+# 1) Complete the grid initialization function and the main fire simulation function.
+# 2) Implement the fire plotting function to visualize the results of each hour during the simulation.
+# 3) Implement the function to calculate temperature and humidity.
+# 4) Design and implement the simulation for hypothesis 2: The impact of humidity on the likelihood of wildfire spread in areas surrounding bodies of water.
+# 5) Design and implement the simulation for validation 1: The impact of seasons (humidity & temperature) on wildfire spread.
+
+# Name: Guan-Hong Lin
+# 1) 
+
+"""
+
+# main code
 # Main code execution starts here
 if __name__ == "__main__":
     rows, cols = 50, 50  # Define the size of the grid (50x50)

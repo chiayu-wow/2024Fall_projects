@@ -7,6 +7,16 @@
 - **Chia Yu Wang**  
 - **Guan Hong Lin**
 
+## **Contribution**
+### Name: Chia-Yu Wang
+#### - Complete the grid initialization function and the main fire simulation function.
+#### - Implement the fire plotting function to visualize the results of each hour during the simulation.
+#### - Implement the function to calculate temperature and humidity.
+#### - Design and implement the simulation for hypothesis 2: The impact of humidity on the likelihood of wildfire spread in areas surrounding bodies of water.
+#### - Design and implement the simulation for validation 1: The impact of seasons (humidity & temperature) on wildfire spread.
+
+### Name: Guan-Hong Lin
+#### - 
 ---
 
 ## **Project Overview**
