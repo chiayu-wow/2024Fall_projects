@@ -131,29 +131,46 @@ def compare_bush_non_bush(grid, tree_types, wind_speed, wind_direction):
 # Hypothesis 2 functions
 def plot_fire_and_water_influence(grid, burn_probabilities):
     """
-    Visualize the relationship between water proximity and burn probabilities in a grid-based fire simulation.
+        Visualize the relationship between water proximity and burn probabilities in a grid-based fire simulation.
 
-    Parameters:
-    -----------
-    grid : numpy.ndarray
-        A 2D array representing the simulation grid. Each cell has an integer value indicating its type:
-        - 3: Water
-        - Other values can represent various terrain types (e.g., trees, empty land, etc.).
-    burn_probabilities : numpy.ndarray
-        A 2D array of the same shape as `grid` containing the burn probabilities for each cell.
+        Parameters:
+        -----------
+        grid : numpy.ndarray
+            A 2D array representing the simulation grid. Each cell has an integer value indicating its type:
+            - 3: Water
+            - Other values can represent various terrain types (e.g., trees, empty land, etc.).
+        burn_probabilities : numpy.ndarray
+            A 2D array of the same shape as `grid` containing the burn probabilities for each cell.
 
-    Functionality:
-    --------------
-    1. Identifies water cells (value 3 in `grid`) and calculates the distance of every cell to the nearest water cell.
-    2. Adjusts the burn probabilities based on proximity to water:
-       - Burn probabilities decrease with proximity to water, with a maximum influence distance of 5 cells.
-    3. Generates visualizations:
-       - Heatmap of initial burn probabilities.
-       - Heatmap of distances to water.
-       - Boxplot comparing burn probabilities of cells close to water (distance ≤ 5) and far from water (distance > 5).
+        Functionality:
+        --------------
+        1. Identifies water cells (value 3 in `grid`) and calculates the distance of every cell to the nearest water cell.
+        2. Adjusts the burn probabilities based on proximity to water:
+           - Burn probabilities decrease with proximity to water, with a maximum influence distance of 5 cells.
+        3. Generates visualizations:
+           - Heatmap of initial burn probabilities.
+           - Heatmap of distances to water.
+           - Boxplot comparing burn probabilities of cells close to water (distance ≤ 5) and far from water (distance > 5).
 
-    Returns: None
-    """
+        Returns:
+        --------
+        None
+            The function displays three visualizations:
+            1. Heatmap of burn probabilities.
+            2. Heatmap of distances to water.
+            3. A boxplot comparing burn probabilities of cells close to water and far from water.
+
+        Example:
+        --------
+        >>> grid = np.array([[1, 2, 3], [3, 1, 2], [2, 3, 1]])  # 3 represents water
+        >>> burn_probabilities = np.array([[0.5, 0.7, 0.2], [0.8, 0.4, 0.3], [0.6, 0.5, 0.9]])
+        >>> plot_fire_and_water_influence(grid, burn_probabilities)
+        Statistics for cells close to water (distance ≤ 5 cells):
+        Mean: 0.5444, Median: 0.5000, Std: 0.2166
+        <BLANKLINE>
+        Statistics for cells far from water (distance > 5 cells):
+        Mean: nan, Median: nan, Std: nan
+     """
 
     water_cells = (grid == 3)
 
@@ -311,26 +328,32 @@ def describe_data(data, season):
 
 def plot_heatmap_and_boxplot(winter_data, summer_data, grid_size=(50, 50)):
     """
-    Plots a heatmap of burn probabilities for winter and summer seasons, and a
-    boxplot to compare the distributions of burn probabilities between the two seasons.
+        Plots a heatmap of burn probabilities for winter and summer seasons, and a
+        boxplot to compare the distributions of burn probabilities between the two seasons.
 
-    Parameters:
-    -----------
-    winter_data : numpy.ndarray or list
-        A 1D array or list containing burn probabilities for the winter season.
-        It will be reshaped into a 2D grid based on `grid_size`.
-    summer_data : numpy.ndarray or list
-        A 1D array or list containing burn probabilities for the summer season.
-        It will be reshaped into a 2D grid based on `grid_size`.
-    grid_size : tuple of int, optional
-        The dimensions (rows, columns) of the grid used for reshaping the input data.
-        Default is (50, 50).
+        Parameters:
+        -----------
+        winter_data : numpy.ndarray or list
+            A 1D array or list containing burn probabilities for the winter season.
+            It will be reshaped into a 2D grid based on `grid_size`.
+        summer_data : numpy.ndarray or list
+            A 1D array or list containing burn probabilities for the summer season.
+            It will be reshaped into a 2D grid based on `grid_size`.
+        grid_size : tuple of int, optional
+            The dimensions (rows, columns) of the grid used for reshaping the input data.
+            Default is (50, 50).
 
-    Outputs:
-    --------
-    - A figure with two subplots displaying heatmaps for winter and summer data.
-    - A separate figure displaying a boxplot comparing burn probabilities for
-      winter and summer.
+        Outputs:
+        --------
+        - A figure with two subplots displaying heatmaps for winter and summer data.
+        - A separate figure displaying a boxplot comparing burn probabilities for
+          winter and summer.
+
+        Example:
+        --------
+        >>> winter_data = [0.3, 0.6, 0.2, 0.4, 0.7, 0.1, 0.5, 0.3, 0.8, 0.2]  # A small example dataset
+        >>> summer_data = [0.5, 0.7, 0.3, 0.6, 0.8, 0.2, 0.4, 0.6, 0.7, 0.5]
+        >>> plot_heatmap_and_boxplot(winter_data, summer_data, grid_size=(2, 5))  # 2x5 grid for demonstration
     """
     # Reshape data
     winter_grid = np.array(winter_data).reshape(grid_size)
