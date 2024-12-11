@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import distance_transform_edt
-from plot import  create_heatmap, plot_single_heatmap
+from plot import create_heatmap, plot_single_heatmap
 from simulate import simulate_fire
 import numpy as np
 import pandas as pd
@@ -13,8 +13,13 @@ def clear_and_set_fire(grid, start_point):
     Clears all fire points and sets a new fire point.
 
     :param grid: numpy array, simulation grid
-    :param start_point: tuple, fire point coordinates (row, col)
+    :param start_point: tuple[int, int], fire point coordinates (row, col)
     :return: numpy array, the updated grid with the new fire point
+
+    >>> grid = np.array([[0, 0], [2, 0]])
+    >>> clear_and_set_fire(grid, (0, 1))
+    array([[0, 2],
+           [0, 0]])
     """
     grid_copy = grid.copy()
     grid_copy[grid_copy == 2] = 0  # Clear all potential fire sources
@@ -22,36 +27,35 @@ def clear_and_set_fire(grid, start_point):
     return grid_copy
 
 
-def find_closest_location(grid, tree_types, target_type, center=(25, 25)):
+def find_closest_location(grid, tree_types, target_type, center):
     """
     Finds the location of the specified type that is closest to the center.
 
     :param grid: numpy array, simulation grid
     :param tree_types: numpy array, tree type grid
     :param target_type: str, target type ('bush' or 'non_bush')
-    :param center: tuple, center coordinates (row, col)
-    :return: tuple, the closest location
+    :param center: tuple[int, int], center coordinates (row, col)
+    :return: tuple[int, int] or None, the closest location
+
+    >>> grid = np.array([[5, 0], [1, 5]])
+    >>> tree_types = np.array([['bush', 'bush'], ['non_bush', 'bush']])
+    >>> find_closest_location(grid, tree_types, "bush", center=(0, 0))
+    (0, 0)
     """
     if target_type == "bush":
-        # Find all Bush locations
-        locations = list(zip(*np.where(grid == 5)))
+        locations = list(zip(*np.where(grid == 5)))  # Find all Bush locations
     elif target_type == "non_bush":
-        # Find all Non-Bush locations
-        locations = list(zip(*np.where((grid == 1) & (tree_types != "bush"))))
+        locations = list(zip(*np.where((grid == 1) & (tree_types != "bush"))))  # Find all Non-Bush locations
     else:
         raise ValueError("Invalid target_type. Use 'bush' or 'non_bush'.")
 
-    # Calculate the Euclidean distance of each location to the center
     distances = [((loc[0] - center[0]) ** 2 + (loc[1] - center[1]) ** 2, loc) for loc in locations]
-
-    # Sort by distance
     distances.sort(key=lambda x: x[0])
 
-    # Return the closest location
     return distances[0][1] if distances else None
 
 
-def simulate_multiple_starts(grid, tree_types, start_locations, wind_speed=0, wind_direction="W"):
+def simulate_multiple_starts(grid, tree_types, start_locations, wind_speed, wind_direction):
     """
     Simulates multiple fire starting points, recording burned area and time for each.
 
@@ -61,28 +65,26 @@ def simulate_multiple_starts(grid, tree_types, start_locations, wind_speed=0, wi
     :param wind_speed: float, wind speed
     :param wind_direction: str, wind direction (N, E, S, W)
     :return: pandas DataFrame, combined results for all simulations
+
+    >>> grid = np.zeros((5, 5))
+    >>> tree_types = np.array([['bush'] * 5] * 5)
+    >>> start_locations = [(2, 2)]
+    >>> simulate_multiple_starts(grid, tree_types, start_locations, wind_speed=1, wind_direction="E").empty
+    False
     """
-    all_results = []  # List to store DataFrame for each simulation
+    all_results = []
 
     for start_point in start_locations:
-        # Set a new fire point
         grid_with_fire = clear_and_set_fire(grid, start_point)
-
-        # Simulate
         _, simulation_results = simulate_fire(grid_with_fire, tree_types, wind_speed, wind_direction, simulations=1)
-
-        # Append the DataFrame directly to the list
         all_results.append(simulation_results)
+        break
 
-        # Simulate only once, then exit
-        break  # Simulate for only one fire point
-
-    # Combine all results into a single DataFrame
     combined_results = pd.concat(all_results, ignore_index=True)
     return combined_results
 
 
-def compare_bush_non_bush(grid, tree_types, wind_speed=0, wind_direction="W"):
+def compare_bush_non_bush(grid, tree_types, wind_speed, wind_direction):
     """
     Compares simulation results for fire points starting in bush and non-bush areas.
 
@@ -91,39 +93,38 @@ def compare_bush_non_bush(grid, tree_types, wind_speed=0, wind_direction="W"):
     :param wind_speed: float, wind speed
     :param wind_direction: str, wind direction (N, E, S, W)
     :return: pandas DataFrame, combined results for Bush and Non-Bush simulations
-    """
-    # Define the center point
-    center_point = (25, 25)
 
-    # Find the closest Bush and Non-Bush fire points to the center
+    >>> grid = np.zeros((5, 5))
+    >>> grid[2, 2] = 5  # Bush
+    >>> tree_types = np.array([['bush'] * 5] * 5)
+    >>> compare_bush_non_bush(grid, tree_types, wind_speed=1, wind_direction="E").empty
+    No valid Non-Bush fire point found.
+    False
+    """
+    center_point = (25, 25)
     closest_bush = find_closest_location(grid, tree_types, target_type="bush", center=center_point)
     closest_non_bush = find_closest_location(grid, tree_types, target_type="non_bush", center=center_point)
 
-    # Initialize result variables
     results_bush = pd.DataFrame()
     results_non_bush = pd.DataFrame()
 
-    # Bush simulation
     if closest_bush:
-        print(f"Simulating fire point (Bush): {closest_bush}")
+        # print(f"Simulating fire point (Bush): {closest_bush}")
         results_bush = simulate_multiple_starts(grid, tree_types, [closest_bush], wind_speed=wind_speed,
                                                 wind_direction=wind_direction)
-        results_bush["category"] = "fire_at_bush"  # Add category column
+        results_bush["category"] = "fire_at_bush"
     else:
         print("No valid Bush fire point found.")
 
-    # Non-Bush simulation
     if closest_non_bush:
-        print(f"Simulating fire point (Non-Bush): {closest_non_bush}")
+        # print(f"Simulating fire point (Non-Bush): {closest_non_bush}")
         results_non_bush = simulate_multiple_starts(grid, tree_types, [closest_non_bush], wind_speed=wind_speed,
                                                     wind_direction=wind_direction)
-        results_non_bush["category"] = "fire_at_non_bush"  # Add category column
+        results_non_bush["category"] = "fire_at_non_bush"
     else:
         print("No valid Non-Bush fire point found.")
 
-    # Combine the results into a single DataFrame
     combined_results = pd.concat([results_bush, results_non_bush], ignore_index=True)
-
     return combined_results
 
 
@@ -184,7 +185,8 @@ def plot_fire_and_water_influence(grid, burn_probabilities):
 
     # Plot 2: Distance to Water Heatmap
     plot_single_heatmap(
-        distances_to_water, "cool", "Distance to Water Heatmap", "Column Index", "Row Index", "Distance to Water (Cells)"
+        distances_to_water, "cool", "Distance to Water Heatmap", "Column Index", "Row Index",
+        "Distance to Water (Cells)"
     )
 
     # Plot 3: Boxplot and Statistical Analysis
@@ -344,8 +346,10 @@ def plot_heatmap_and_boxplot(winter_data, summer_data, grid_size=(50, 50)):
     summer_grid = np.array(summer_data).reshape(grid_size)
 
     # 1. Heatmaps
-    plot_single_heatmap(winter_grid, 'hot', "Winter Season Burn Probabilities", "Column Index", "Row Index", "Burn Probability")
-    plot_single_heatmap(summer_grid, 'hot', "Summer Season Burn Probabilities", "Column Index", "Row Index", "Burn Probability")
+    plot_single_heatmap(winter_grid, 'hot', "Winter Season Burn Probabilities", "Column Index", "Row Index",
+                        "Burn Probability")
+    plot_single_heatmap(summer_grid, 'hot', "Summer Season Burn Probabilities", "Column Index", "Row Index",
+                        "Burn Probability")
 
     # 2. Boxplot
     winter_data_flat = np.array(winter_data).flatten()
@@ -358,5 +362,3 @@ def plot_heatmap_and_boxplot(winter_data, summer_data, grid_size=(50, 50)):
     plt.grid(axis='y', linestyle='--', alpha=0.7)  # Optional: Add a grid to the boxplot
     plt.tight_layout()
     plt.show()
-
-

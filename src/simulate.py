@@ -157,7 +157,7 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=1, w
 
         while True:
             if np.sum(grid_copy == 2) == 0:  # No fire left
-                print(f"Simulation {sim + 1}/{simulations} completed.")
+                # print(f"Simulation {sim + 1}/{simulations} completed.")
                 break
 
             # Update humidity and temperature
