@@ -225,7 +225,7 @@ From the simulation results:
 ---
 
 ### **Plot**
-
+ 
 1. **Burned Area Distribution (Box Plot):**  
    ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_box1.png) 
    - The variability in burned area is highest at 0 m/s, indicating more inconsistent fire spread in calm wind conditions.
@@ -246,7 +246,7 @@ From the simulation results:
 ### **Conclusion**
 The hypothesis that higher wind speeds lead to faster wildfire spread and shorter burn durations is **partially supported**:
 - **Duration:** The duration consistently decreases with higher wind speeds, validating the hypothesis for burn time.  
-- **Burned Area:** The burned area shows a non-linear relationship, increasing slightly at moderate wind speeds (5 m/s) but decreasing at higher wind speeds (10-30 m/s). This suggests that very high wind speeds may contribute to faster fire extinguishment due to more rapid fuel consumption or dispersal of fire.  
+- **Burned Area:** The burned area shows a non-linear relationship, increasing slightly at moderate wind speeds (5 m/s) but decreasing at higher wind speeds (10-30 m/s). This suggests that very high wind speeds may contribute to faster fire extinguishment due to more rapid fuel consumption or dispersal of fire. i
 
 
 ## Validation 1
