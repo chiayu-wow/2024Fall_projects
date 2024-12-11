@@ -285,7 +285,7 @@ In winter, most areas remain unaffected, with only the fire’s starting point s
 
 Statistical comparisons reveal the mean fire spread is much higher in summer, and the median fire spread jumps from 0 in winter to 75 in summer. These findings confirm that seasonal variations, particularly temperature and humidity, significantly affect wildfire spread.
 
-## Conclusion
-1. ...
 
 ## Sources
+- [Fire Behavior Measures](https://nwfirescience.org/sites/default/files/publications/FIREFACTS_Measures%20of%20fire%20behavior%20FINAL.pdf)  
+- [Wildfire Patterns](https://wfca.com/wildfire-articles/biggest-wildfires-in-us-history/)
