@@ -308,6 +308,27 @@ In winter, most areas remain unaffected, with only the fire’s starting point s
 
 Statistical comparisons reveal the mean fire spread is much higher in summer, and the median fire spread jumps from 0 in winter to 75 in summer. These findings confirm that seasonal variations, particularly temperature and humidity, significantly affect wildfire spread.
 
+### **Limitation**
+- **Simplified Environmental Variables:** In real wildfire situations, numerous factors such as soil moisture, air pressure, and varying vegetation density influence fire spread. Incorporating all these factors into the burn probability calculation is computationally intensive and outside the scope of this project.  
+- **Directional Fire Spread:** The simulation considers fire spread in only four cardinal directions (N, S, E, W). In reality, fire can spread diagonally or irregularly based on wind eddies, terrain, and fuel availability, which is not captured here.  
+- **Static Weather Conditions:** The simulation assumes constant environmental conditions (e.g., wind speed, humidity) throughout a single run. Real-world scenarios often involve dynamic changes that significantly alter fire behavior.  
+- **Resolution Constraints:** The 50×50 grid, while sufficient for modeling general behavior, limits the granularity of the analysis and may oversimplify smaller-scale variations in vegetation and terrain.  
+- **Homogeneous Vegetation:** The model assumes consistent vegetation types within each grid cell. Real forests often have mixed vegetation with varying burn rates, which the current simulation does not address.  
+- **Absence of Human Intervention:** Factors like fire suppression efforts (e.g., firefighting, controlled burns) and infrastructure (e.g., roads acting as firebreaks) are not included, which limits the applicability of the results to real-world scenarios.  
+
+---
+
+### **Future Work**
+- **Incorporate More Variables:** Extend the model to include additional environmental factors, such as soil moisture, atmospheric pressure, and vegetation density, to improve realism.  
+- **Dynamic Weather Modeling:** Introduce time-varying conditions, such as changing wind speeds, temperature fluctuations, or sudden rainfall, to simulate more realistic wildfire scenarios.  
+- **Enhanced Grid Resolution:** Use higher-resolution grids or adaptive grid sizes to capture finer details of terrain, vegetation, and fire spread dynamics.  
+- **Diagonal and Irregular Spread:** Expand the propagation logic to account for diagonal spread and irregular patterns influenced by terrain and wind eddies.  
+- **Integration of Firefighting Efforts:** Simulate the impact of fire suppression strategies like water drops, firebreaks, and backburning to evaluate their effectiveness under different conditions.  
+- **Geospatial Data Integration:** Leverage satellite imagery and geographic information systems (GIS) to simulate specific real-world landscapes and wildfire scenarios.  
+- **Scalability and Optimization:** Implement parallel computing or cloud-based simulation methods to handle larger grids and more complex variable interactions efficiently.  
+- **Economic and Ecological Analysis:** Extend the model to evaluate the economic costs of wildfire damage, including infrastructure loss and ecological impact, to provide actionable insights for policy-making.  
+- **Climate Change Implications:** Investigate the long-term effects of climate change on wildfire dynamics, such as increased fire frequency, intensity, and duration.  
+
 
 ## Sources
 - [Fire Behavior Measures](https://nwfirescience.org/sites/default/files/publications/FIREFACTS_Measures%20of%20fire%20behavior%20FINAL.pdf)  
