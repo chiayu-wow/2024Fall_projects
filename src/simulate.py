@@ -99,42 +99,63 @@ def calculate_humidity_and_temperature(grid, season=None):
 
 def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=1, wind_affected=True, season=None):
     """
-        Simulates fire spread on a grid considering tree types, wind speed, wind direction, and season.
+    Simulates fire spread on a grid considering tree types, wind speed, wind direction, and season.
 
-        Parameters:
-        -----------
-        grid : numpy.ndarray
-            A 2D array representing the simulation grid. Cell values:
-            - 0: Empty land
-            - 1: Tree (flammable)
-            - 2: Fire (burning)
-            - 3: Water (non-flammable)
-             -5 : bushes
-        tree_types : dict
-            Dictionary mapping tree types to their burn probabilities. For example:
-            `{1: 0.6, 2: 0.8}` where keys are tree types in the grid.
-        wind_speed : float
-            Wind speed in km/h. Higher wind speeds accelerate fire spread.
-        wind_direction : str
-            Wind direction, one of 'N', 'S', 'E', 'W', indicating where the wind is blowing towards.
-        simulations : int, optional
-            Number of simulation iterations to run. Default is 1.
-        wind_affected : bool, optional
-            Whether the wind affects fire spread. Default is True.
-        season : str, optional
-            Season can be 'summer', 'winter', or None. Seasons impact burn probabilities.
+    Parameters:
+    -----------
+    grid : numpy.ndarray
+        A 2D array representing the simulation grid. Cell values:
+        - 0: Empty land
+        - 1: Tree (flammable)
+        - 2: Fire (burning)
+        - 3: Water (non-flammable)
+        - 5: Bushes (flammable but with different properties)
+    tree_types : numpy.ndarray
+        A 2D array of the same shape as `grid`, assigning types to trees and bushes. Examples:
+        - Trees: "pine", "oak", "willow"
+        - Bushes: "bush"
+    wind_speed : float
+        Wind speed in km/h. Higher wind speeds accelerate fire spread.
+    wind_direction : str
+        Wind direction, one of 'N', 'S', 'E', 'W', indicating where the wind is blowing towards.
+    simulations : int, optional
+        Number of simulation iterations to run. Default is 1.
+    wind_affected : bool, optional
+        Whether the wind affects fire spread. Default is True.
+    season : str, optional
+        Season can be 'summer', 'winter', or None. Seasons impact burn probabilities.
 
-        Returns:
-        --------
-        numpy.ndarray
-            The grid after the fire simulation.
+    Returns:
+    --------
+    tuple
+        - numpy.ndarray: Burn probabilities grid after the simulations.
+        - pandas.DataFrame: Simulation results containing burned area and duration for each simulation.
+
+    Examples:
+    ---------
+    >>> import numpy as np
+    >>> grid = np.array([[0, 1, 2, 3],
+    ...                  [1, 1, 0, 3],
+    ...                  [0, 2, 1, 0],
+    ...                  [3, 0, 0, 1]])
+    >>> # Tree types: assign types to trees and bushes
+    >>> tree_types = np.empty_like(grid, dtype=object)
+    >>> tree_types[grid == 1] = np.random.choice(["pine", "oak", "willow"], size=np.sum(grid == 1))
+    >>> tree_types[grid == 5] = "bush"
+    >>> wind_speed = 5
+    >>> wind_direction = 'N'
+    >>> burn_probs, results_df = simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=1)
+    >>> burn_probs.shape
+    (4, 4)
+    >>> 'burned_area' in results_df.columns
+    True
     """
+    # Initialize simulation variables
     rows, cols = grid.shape
     burn_counts = np.zeros_like(grid, dtype=float)  # Tracks burn occurrences for each cell
     simulation_results = []  # To store results of each simulation
 
     # Set wind speed and direction weights
-    # Max wind speed is 1, min is 0
     if wind_speed < 1:
         tailwind = 1
         against_wind = 1
@@ -142,59 +163,65 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=1, w
         tailwind = 0.49 * wind_speed + 0.5
         against_wind = 1 - tailwind
 
+    # Wind effect factors for each direction
     wind_weights = {
         'N': [against_wind, tailwind, 1, 1],  # North
         'E': [1, 1, tailwind, against_wind],  # East
         'S': [tailwind, against_wind, 1, 1],  # South
         'W': [1, 1, against_wind, tailwind],  # West
     }
-    NZ = wind_weights[wind_direction]
+    NZ = wind_weights[wind_direction]  # Get wind effect based on direction
 
     for sim in range(simulations):
-        grid_copy = grid.copy()
-        cooldowns = np.zeros_like(grid, dtype=float)
+        grid_copy = grid.copy()  # Copy grid for simulation
+        cooldowns = np.zeros_like(grid, dtype=float)  # Initialize cooldown grid
         hours = 0
         total_burned_area = 0  # Tracks the total burned area in this simulation
 
         while True:
-            if np.sum(grid_copy == 2) == 0:  # No fire left
-                # print(f"Simulation {sim + 1}/{simulations} completed.")
+            # Terminate simulation if no fire is left
+            if np.sum(grid_copy == 2) == 0:
                 break
 
-            # Update humidity and temperature
+            # Update humidity and temperature based on the season
             humidities, temperatures = calculate_humidity_and_temperature(grid_copy, season)
             new_grid = grid_copy.copy()
 
+            # Iterate over grid cells to simulate fire spread
             for r in range(rows):
                 for c in range(cols):
-                    if grid_copy[r, c] == 2 and cooldowns[r, c] <= 0:  # Spread fire
-                        for i, (dr, dc) in enumerate([(-1, 0), (1, 0), (0, -1), (0, 1)]):  # N, S, W, E
+                    if grid_copy[r, c] == 2 and cooldowns[r, c] <= 0:  # Burning cell
+                        # Spread fire to neighboring cells (N, S, W, E)
+                        for i, (dr, dc) in enumerate([(-1, 0), (1, 0), (0, -1), (0, 1)]):
                             nr, nc = r + dr, c + dc
                             if 0 <= nr < rows and 0 <= nc < cols and (grid_copy[nr, nc] == 1 or grid_copy[nr, nc] == 5):
-                                tree_type = tree_types[nr, nc]
-                                flammability = tree_flammability[tree_type]
-                                burn_rate = tree_burn_rates[tree_type]
+                                tree_type = tree_types[nr, nc]  # Get tree type
+                                flammability = tree_flammability[tree_type]  # Get flammability rate
+                                burn_rate = tree_burn_rates[tree_type]  # Get burn rate
 
-                                wind_factor = NZ[i]
+                                wind_factor = NZ[i]  # Get wind factor for this direction
 
+                                # Adjust burn rate based on wind and conditions
                                 adjusted_burn_rate = burn_rate * (1 + wind_factor) if wind_affected else burn_rate
                                 burn_probability = flammability * (1 - humidities[nr, nc]) * (
                                         1 + (temperatures[nr, nc] - 25) / 100) * (
-                                                           1 + wind_factor / 5)  # Wind amplifies burn probability
+                                                           1 + wind_factor / 5)
 
+                                # Ignite neighboring cell based on probability
                                 if np.random.random() < burn_probability:
                                     new_grid[nr, nc] = 2  # Ignite cell
                                     cooldowns[nr, nc] = 1 / adjusted_burn_rate
 
-                        # Burned-out state
+                        # Mark current cell as burned out
                         new_grid[r, c] = 4
                         burn_counts[r, c] += 1
                         cooldowns[r, c] = 0
                         total_burned_area += 1  # Increment burned area count
 
+            # Update cooldowns and grid
             cooldowns = np.maximum(0, cooldowns - 1)
             grid_copy = new_grid
-            plot_fire(grid_copy, tree_types, hours)
+            plot_fire(grid_copy, tree_types, hours)  # Visualize fire progression
             hours += 1
 
         # Store results for this simulation
