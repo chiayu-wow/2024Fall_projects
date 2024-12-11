@@ -149,82 +149,6 @@ The overlap in duration ranges indicates that fire behavior is influenced by oth
 The hypothesis that fires in bushland result in a **50% larger burned area** compared to non-bushland is **not supported** by this analysis. Instead, the actual increase in burned area is approximately **16.37%**. This suggests that while bushland ignition does increase fire spread, the effect is less pronounced than initially expected. 
 
 ## Hypothesis 2
-### Hypothesis : 
-(explanation)
-1. Independent variable : wind speed
-2. Dependent variable : burned area, duration
-3. Controlled variables :
-### Result
-(plot)
-(analyze description)
-(conclusion)
-
-## Hypothesis 3
-<<<<<<< HEAD
-### Hypothesis : As wind speed increases, wildfire spread accelerates, leading to shorter burn durations for a given area.
-to see how wind speed affect the burned pattern and burned speed, we conduct the simulation in 4 kind of wind speed (0, 5, 10 ,20, 30 mph) in 50 times each. 
-1. Independent variable : wind speed
-2. Dependent variable : burned area, duration
-3. Controlled variables : wind direction, tree type, water bodies, humidity, temperature
-### Burn Probability Heatmap Result
-![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_01.png)
-wind speed = 0
-![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_00.png)
-wind speed = 5
-![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_05.png)
-wind speed = 10
-![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_10.png)
-wind speed = 20
-![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_20.png)
-wind speed = 30
-![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_30.png)
-
-As we can see the difference of the burned pattern from wind speed 0 ot 30. when there is no wind(wind speed = 0), the burned pattern spread through every direction, only avoid getting close to the water body.
-when the wind speed become greater, the burned area is more manifest on the tailed wind side of the grip map. On the other hand, the against wind side was less burned or even not burning.
-the burned pattern is gradually going south.
-
-### **Hypothesis Testing:**
-
-#### **Hypothesis**
-"The higher the wind speed, the faster the spread of the wildfire and the shorter the time required for it to burn a given area."
-
----
-
-### **Statistical Results**
-
-From the simulation results:  
-![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_stat.png)
-- As wind speed increases, the burned area initially increases slightly (from 0 to 5 m/s) but then decreases steadily at higher wind speeds (10 m/s and above).
-- The duration of the wildfire consistently decreases with increasing wind speed, supporting the hypothesis that higher wind speeds result in faster fire spread and shorter burn times.
-
----
-
-### **Plot**
-
-1. **Box Plot of Burned Area:**  
-   ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_box1.png)
-   - The variability in burned area is highest at 0 m/s, indicating more inconsistent fire spread in calm wind conditions.
-   - The burned area slightly increases at 5 m/s but decreases significantly at higher wind speeds, suggesting that high wind speeds might create conditions where fires burn out more quickly.
-
-2. **Duration Distribution:**  
-   ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_box2.png) 
-   - Fire duration consistently decreases with increasing wind speed, reflecting faster fire spread and burnout at higher wind speeds.
-   - The variability in fire duration is highest at 0 m/s and becomes minimal at 20 and 30 m/s, indicating more consistent fire behavior under strong wind conditions.
-
-3. **Scatter Plot of Burned Area vs. Duration:**  
-   ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_scatter.png)
-   - Higher wind speeds result in data points clustered in the lower-left quadrant, indicating smaller burned areas and shorter durations.
-   - At 0 and 5 m/s, data points are more spread out, showing greater variability in fire behavior.
-
----
-
-### **Conclusion**
-The hypothesis that higher wind speeds lead to faster wildfire spread and shorter burn durations is **partially supported**:
-- **Duration:** The duration consistently decreases with higher wind speeds, validating the hypothesis for burn time.  
-- **Burned Area:** The burned area shows a non-linear relationship, increasing slightly at moderate wind speeds (5 m/s) but decreasing at higher wind speeds (10-30 m/s). This suggests that very high wind speeds may contribute to faster fire extinguishment due to more rapid fuel consumption or dispersal of fire.  
-
-These results highlight the complex role of wind in wildfire propagation, where stronger winds accelerate fire spread but may reduce the total burned area.
-=======
 ### Hypothesis : The impact of humidity on the likelihood of wildfire spread in areas surrounding bodies of water
 
 1. Independent variable :
@@ -261,6 +185,19 @@ The heatmap shows that areas near water bodies are less likely to experience fir
 
 The statistical analysis supports this conclusion, with cells near the water body showing a lower mean fire probability. The median fire probability near the water body is 0, much lower than the median fire probability of cells farther from the water. This demonstrates that increased humidity near water bodies plays a significant role in reducing wildfire spread.
 >>>>>>> origin/main
+
+
+## Hypothesis 3
+### Hypothesis : 
+(explanation)
+1. Independent variable :
+2. Dependent variable :
+3. Controlled variables :
+### Result
+(plot)
+(analyze description)
+(conclusion)
+
 
 ## Validation 1
 ### Validation : The impact of seasons (humidity & temperature) on wildfire spread
