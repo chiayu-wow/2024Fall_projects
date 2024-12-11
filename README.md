@@ -297,4 +297,11 @@ Statistical comparisons reveal the mean fire spread is much higher in summer, an
 
 ## Sources
 - [Fire Behavior Measures](https://nwfirescience.org/sites/default/files/publications/FIREFACTS_Measures%20of%20fire%20behavior%20FINAL.pdf)  
-- [Wildfire Patterns](https://wfca.com/wildfire-articles/biggest-wildfires-in-us-history/)
+- [Wildfire History](https://wfca.com/wildfire-articles/biggest-wildfires-in-us-history/)
+- [Fire simulation](https://github.com/gongouveia/Monte-Carlo-Simulation-Fire/blob/main/fire_simulation-1.ipynb)
+- [Wildfire Model](https://www.mdpi.com/2571-6255/3/4/71)
+- [Modeling Wildfire Risk](https://ui.adsabs.harvard.edu/abs/2016AGUFMGC51E1253B/abstract)
+- [Wildfire report](https://www.ncei.noaa.gov/access/monitoring/monthly-report/fire/202401)
+- [Mendocino National Forest](https://www.fs.usda.gov/detailfull/mendocino/learning/nature-science/?cid=stelprdb5143325)
+- [Wind speed rule](https://annforsci.biomedcentral.com/articles/10.1007/s13595-019-0829-8)
+- [Beaufort Wind Scale](https://www.weather.gov/mfl/beaufort)
