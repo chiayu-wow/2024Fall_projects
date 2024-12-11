@@ -4,9 +4,9 @@ from functions import compare_bush_non_bush, plot_fire_and_water_influence, comp
     plot_heatmap_and_boxplot
 from seeds import initialize_grid
 
-# 主程式
+# main code
 if __name__ == "__main__":
-    rows, cols = 50, 50  # 網格尺寸
+    rows, cols = 50, 50  # grid size
     # generate grip map
 
     grid, tree_types = initialize_grid(rows, cols, 0.05)
@@ -66,11 +66,11 @@ if __name__ == "__main__":
     print('Hypothesis 2 simulation complete')
 
     ## hypothesis 3 simulation ##
-    # 設定要比較的風速和風向
-    wind_speeds_03 = [10]  # 三種風速
-    wind_direction_03 = "N"  # 北風
+    # setting the wind speed and direction
+    wind_speeds_03 = [10]  # wind speed
+    wind_direction_03 = "N"  # wind direction
 
-    # 執行模擬
+    # conduct simulation
     combined_results_03, burn_probabilities_03 = compare_wind_speeds(grid, tree_types, wind_speeds_03,
                                                                      wind_direction_03)
 
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     # Reshape into a 50x50 matrix
     burn_probabilities_03 = data_03[:2500].reshape(50, 50)
 
-    # 匯出結果為 CSV
+
     combined_results_03.to_csv("data/wind_speed_comparison_results_test.csv", index=False)
 
     print('Hypothesis 3 simulation complete')
