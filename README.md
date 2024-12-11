@@ -38,7 +38,6 @@ This project aims to model and simulate the spread of wildfires under varying en
 ## **Model Design**
 
 We simulate the **Mendocino Complex Fire (July 2018)**, the largest wildfire in California's history, which burned approximately **459,123 acres**. To closely replicate the scenario:
-Here’s the revised section of the `README.md` explaining the reasoning behind setting the grid size to **46 chains per side** and how it aligns with the burn rates of different tree types:
 
 ### **Grid and Burn Rate Design**
 
