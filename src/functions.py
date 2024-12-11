@@ -8,7 +8,7 @@ import pandas as pd
 
 
 # Hypothesis 1 functions
-def clear_and_set_fire(grid: np.ndarray, start_point: tuple[int, int]) -> np.ndarray:
+def clear_and_set_fire(grid, start_point):
     """
     Clears all fire points and sets a new fire point.
 
@@ -27,8 +27,7 @@ def clear_and_set_fire(grid: np.ndarray, start_point: tuple[int, int]) -> np.nda
     return grid_copy
 
 
-def find_closest_location(grid: np.ndarray, tree_types: np.ndarray, target_type: str,
-                          center: tuple[int, int] = (25, 25)) -> tuple[int, int] | None:
+def find_closest_location(grid, tree_types, target_type, center):
     """
     Finds the location of the specified type that is closest to the center.
 
@@ -56,8 +55,7 @@ def find_closest_location(grid: np.ndarray, tree_types: np.ndarray, target_type:
     return distances[0][1] if distances else None
 
 
-def simulate_multiple_starts(grid: np.ndarray, tree_types: np.ndarray, start_locations: list[tuple[int, int]],
-                             wind_speed: float = 0, wind_direction: str = "W") -> pd.DataFrame:
+def simulate_multiple_starts(grid, tree_types, start_locations, wind_speed, wind_direction):
     """
     Simulates multiple fire starting points, recording burned area and time for each.
 
@@ -86,8 +84,7 @@ def simulate_multiple_starts(grid: np.ndarray, tree_types: np.ndarray, start_loc
     return combined_results
 
 
-def compare_bush_non_bush(grid: np.ndarray, tree_types: np.ndarray, wind_speed: float = 0,
-                          wind_direction: str = "W") -> pd.DataFrame:
+def compare_bush_non_bush(grid, tree_types, wind_speed, wind_direction):
     """
     Compares simulation results for fire points starting in bush and non-bush areas.
 
