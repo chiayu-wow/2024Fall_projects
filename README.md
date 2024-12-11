@@ -179,15 +179,66 @@ The statistical analysis supports this conclusion, with cells near the water bod
 
 
 ## Hypothesis 3
-### Hypothesis : 
-(explanation)
-1. Independent variable :
-2. Dependent variable :
-3. Controlled variables :
-### Result
-(plot)
-(analyze description)
-(conclusion)
+### Hypothesis : As wind speed increases, wildfire spread accelerates, leading to shorter burn durations for a given area.
+
+1. Independent variable : wind speed 
+2. Dependent variable : burned area, duration
+3. Controlled variables : wind direction,tree type, water bodies, humidity, temperature
+we conduct the hypothesis in 4 kind of wind speed, and see how the burned pattern change. 
+
+### **Burn Probability Heatmap**
+
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_01.png)
+wind = 0
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_00.png)
+wind = 5
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_05.png)
+wind = 10
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_10.png)
+wind = 20
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_20.png)
+wind = 30
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_30.png)
+
+as we can see from the changes of burned pattern from no wind(wind speed=0) to strong wind (wind speed=30),
+the fire spread has every direction when there is no wind, it only avoid the water bodies. and when the wind speed is stronger, the burned pattern of the tail wind side is more manifest.
+on the other hand, the against wind side, was less burned as the wind getting stronger.
+
+
+### **Statistical Results**
+
+From the simulation results:  
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_stat.png)
+
+- As wind speed increases, the burned area initially increases slightly (from 0 to 5 m/s) but then decreases steadily at higher wind speeds (10 m/s and above).
+- The duration of the wildfire consistently decreases with increasing wind speed, supporting the hypothesis that higher wind speeds result in faster fire spread and shorter burn times.
+
+---
+
+### **Plot**
+
+1. **Burned Area Distribution (Box Plot):**  
+   ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_box1.png) 
+   - The variability in burned area is highest at 0 m/s, indicating more inconsistent fire spread in calm wind conditions.
+   - The burned area slightly increases at 5 m/s but decreases significantly at higher wind speeds, suggesting that high wind speeds might create conditions where fires burn out more quickly.
+
+2. **Duration Distribution (Box Plot):**  
+   ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_box2.png)  
+   - Fire duration consistently decreases with increasing wind speed, reflecting faster fire spread and burnout at higher wind speeds.
+   - The variability in fire duration is highest at 0 m/s and becomes minimal at 20 and 30 m/s, indicating more consistent fire behavior under strong wind conditions.
+
+3. **Burned Area vs. Duration (Scatter Plot):**  
+   ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_scatter.png)   
+   - Higher wind speeds result in data points clustered in the lower-left quadrant, indicating smaller burned areas and shorter durations.
+   - At 0 and 5 m/s, data points are more spread out, showing greater variability in fire behavior.
+
+---
+
+### **Conclusion**
+The hypothesis that higher wind speeds lead to faster wildfire spread and shorter burn durations is **partially supported**:
+- **Duration:** The duration consistently decreases with higher wind speeds, validating the hypothesis for burn time.  
+- **Burned Area:** The burned area shows a non-linear relationship, increasing slightly at moderate wind speeds (5 m/s) but decreasing at higher wind speeds (10-30 m/s). This suggests that very high wind speeds may contribute to faster fire extinguishment due to more rapid fuel consumption or dispersal of fire.  
+
 
 
 ## Validation 1
