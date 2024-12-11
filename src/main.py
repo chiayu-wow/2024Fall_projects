@@ -17,8 +17,11 @@ from seeds import initialize_grid
 # 5) Design and implement the simulation for validation 1: The impact of seasons (humidity & temperature) on wildfire spread.
 
 # Name: Guan-Hong Lin
-# 1) 
-
+# 1) Designed and implemented the cooldowns mechanism to optimize the burn rate in wildfire simulations, ensuring alignment with dynamic environmental conditions.
+# 2) Integrated wind direction and wind speed parameters into the simulation, enhancing its accuracy in modeling wildfire spread under diverse conditions.
+# 3) Performed extensive research to align simulation parameters with real-world wildfire scenarios, ensuring reliability and scientific validity.
+# 4) Designed and implemented a simulation for hypothesis 1: Burned areas increase by approximately 50% when ignition originates from bushland compared to forested areas dominated by willow, pine, and oak trees.
+# 5) Designed and implemented a simulation for hypothesis 3: Analyze the relationship between wind speed and wildfire spread, demonstrating that higher wind speeds accelerate spread and reduce burn duration for a given area.
 """
 
 # Main code execution starts here
