@@ -122,7 +122,7 @@ From the simulation results:
   - **Fire at Non-Bushland:** Mean = 26.28%, Std = 21.12%
 
 Fires in bushland tend to spread slightly faster and burn a larger percentage of the area compared to non-bushland fires.
-The burned area from fires ignited in bushland is, on average, **16.37% larger** than that from fires in non-bushland areas. This is significantly smaller than the hypothesized **50% increase**.
+The burned area from fires ignited in bushland is, on average, **4.3% larger** than that from fires in non-bushland areas. This is significantly smaller than the hypothesized **50% increase**.
 Thus, **the hypothesis is not fully supported** based on these simulation results. While fires in bushland do tend to burn larger areas, the difference is more modest than expected.
 
 ---
