@@ -184,7 +184,7 @@ The heatmap shows that areas near water bodies are less likely to experience fir
 ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis/Screenshot%202024-12-10%20at%2011.34.32%E2%80%AFAM.png)
 
 The statistical analysis supports this conclusion, with cells near the water body showing a lower mean fire probability. The median fire probability near the water body is 0, much lower than the median fire probability of cells farther from the water. This demonstrates that increased humidity near water bodies plays a significant role in reducing wildfire spread.
->>>>>>> origin/main
+
 
 
 ## Hypothesis 3
