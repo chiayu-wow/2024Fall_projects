@@ -10,12 +10,18 @@ import pandas as pd
 # Hypothesis 1 functions
 def clear_and_set_fire(grid, start_point):
     """
-    Clears all fire points and sets a new fire point.
+    Clears all fire points and sets a new fire point in the grid.
 
-    :param grid: numpy array, simulation grid
-    :param start_point: tuple[int, int], fire point coordinates (row, col)
-    :return: numpy array, the updated grid with the new fire point
+    Steps:
+    1. Creates a copy of the grid to avoid modifying the original grid.
+    2. Clears all fire points by setting any cell with the value 2 (indicating fire) to 0.
+    3. Sets the specified start_point as the new fire source by assigning the value 2.
 
+    :param grid: numpy array, the simulation grid where fire simulation is performed.
+    :param start_point: tuple[int, int], coordinates (row, col) where the fire starts.
+    :return: numpy array, the updated grid with the new fire point set.
+
+    Example:
     >>> grid = np.array([[0, 0], [2, 0]])
     >>> clear_and_set_fire(grid, (0, 1))
     array([[0, 2],
@@ -29,14 +35,22 @@ def clear_and_set_fire(grid, start_point):
 
 def find_closest_location(grid, tree_types, target_type, center):
     """
-    Finds the location of the specified type that is closest to the center.
+    Finds the location of a specific type (bush or non-bush) closest to the given center point.
 
-    :param grid: numpy array, simulation grid
-    :param tree_types: numpy array, tree type grid
-    :param target_type: str, target type ('bush' or 'non_bush')
-    :param center: tuple[int, int], center coordinates (row, col)
-    :return: tuple[int, int] or None, the closest location
+    Steps:
+    1. Determines the locations of cells matching the target type:
+       - "bush": Cells with value 5 in the grid.
+       - "non_bush": Cells with value 1 and tree type not labeled as "bush."
+    2. Computes the squared Euclidean distance from each candidate location to the center point.
+    3. Returns the location with the smallest distance.
 
+    :param grid: numpy array, the simulation grid with numerical representations of objects.
+    :param tree_types: numpy array, grid labeling each cell as 'bush' or 'non_bush'.
+    :param target_type: str, the type to search for ('bush' or 'non_bush').
+    :param center: tuple[int, int], coordinates of the center point to measure distances.
+    :return: tuple[int, int] or None, the closest location of the target type, or None if not found.
+
+    Example:
     >>> grid = np.array([[5, 0], [1, 5]])
     >>> tree_types = np.array([['bush', 'bush'], ['non_bush', 'bush']])
     >>> find_closest_location(grid, tree_types, "bush", center=(0, 0))
@@ -49,23 +63,32 @@ def find_closest_location(grid, tree_types, target_type, center):
     else:
         raise ValueError("Invalid target_type. Use 'bush' or 'non_bush'.")
 
+    # Calculate distances from the center point to each location
     distances = [((loc[0] - center[0]) ** 2 + (loc[1] - center[1]) ** 2, loc) for loc in locations]
-    distances.sort(key=lambda x: x[0])
+    distances.sort(key=lambda x: x[0])  # Sort locations by distance
 
-    return distances[0][1] if distances else None
+    return distances[0][1] if distances else None  # Return the closest location or None
 
 
 def simulate_multiple_starts(grid, tree_types, start_locations, wind_speed, wind_direction):
     """
-    Simulates multiple fire starting points, recording burned area and time for each.
+    Simulates multiple fire starting scenarios, recording results for each start point.
 
-    :param grid: numpy array, simulation grid
-    :param tree_types: numpy array, tree type grid
-    :param start_locations: list of tuples, list of fire point coordinates
-    :param wind_speed: float, wind speed
-    :param wind_direction: str, wind direction (N, E, S, W)
-    :return: pandas DataFrame, combined results for all simulations
+    Steps:
+    1. For each starting point in start_locations:
+       a. Clears the grid and sets the fire at the current start point.
+       b. Runs a fire simulation with the specified grid, tree types, wind speed, and wind direction.
+       c. Collects the results into a list.
+    2. Combines results from all simulations into a single DataFrame.
 
+    :param grid: numpy array, the simulation grid.
+    :param tree_types: numpy array, grid labeling each cell's type.
+    :param start_locations: list of tuples, coordinates of fire starting points.
+    :param wind_speed: float, the speed of the wind affecting fire spread.
+    :param wind_direction: str, the direction of the wind (e.g., 'N', 'E', 'S', 'W').
+    :return: pandas DataFrame, consolidated simulation results for all starting points.
+
+    Example:
     >>> grid = np.zeros((5, 5))
     >>> tree_types = np.array([['bush'] * 5] * 5)
     >>> start_locations = [(2, 2)]
@@ -78,22 +101,31 @@ def simulate_multiple_starts(grid, tree_types, start_locations, wind_speed, wind
         grid_with_fire = clear_and_set_fire(grid, start_point)
         _, simulation_results = simulate_fire(grid_with_fire, tree_types, wind_speed, wind_direction, simulations=1)
         all_results.append(simulation_results)
-        break
+        break  # Stops after one simulation
 
+    # Combine results from all simulations into a single DataFrame
     combined_results = pd.concat(all_results, ignore_index=True)
     return combined_results
 
 
 def compare_bush_non_bush(grid, tree_types, wind_speed, wind_direction):
     """
-    Compares simulation results for fire points starting in bush and non-bush areas.
+    Compares simulation results between fires starting in bush and non-bush areas.
 
-    :param grid: numpy array, simulation grid
-    :param tree_types: numpy array, tree type grid
-    :param wind_speed: float, wind speed
-    :param wind_direction: str, wind direction (N, E, S, W)
-    :return: pandas DataFrame, combined results for Bush and Non-Bush simulations
+    Steps:
+    1. Identifies the closest bush and non-bush locations to the grid's center point.
+    2. Simulates fire starting from these points if valid:
+       a. For bush points, runs a fire simulation and tags results as "fire_at_bush."
+       b. For non-bush points, runs a fire simulation and tags results as "fire_at_non_bush."
+    3. Combines results from both simulations into a single DataFrame.
 
+    :param grid: numpy array, the simulation grid.
+    :param tree_types: numpy array, grid labeling each cell's type.
+    :param wind_speed: float, the speed of the wind affecting fire spread.
+    :param wind_direction: str, the direction of the wind (e.g., 'N', 'E', 'S', 'W').
+    :return: pandas DataFrame, combined simulation results for both bush and non-bush fire points.
+
+    Example:
     >>> grid = np.zeros((5, 5))
     >>> grid[2, 2] = 5  # Bush
     >>> tree_types = np.array([['bush'] * 5] * 5)
@@ -101,7 +133,7 @@ def compare_bush_non_bush(grid, tree_types, wind_speed, wind_direction):
     No valid Non-Bush fire point found.
     False
     """
-    center_point = (25, 25)
+    center_point = (25, 25)  # Center point for distance calculations
     closest_bush = find_closest_location(grid, tree_types, target_type="bush", center=center_point)
     closest_non_bush = find_closest_location(grid, tree_types, target_type="non_bush", center=center_point)
 
@@ -109,23 +141,23 @@ def compare_bush_non_bush(grid, tree_types, wind_speed, wind_direction):
     results_non_bush = pd.DataFrame()
 
     if closest_bush:
-        # print(f"Simulating fire point (Bush): {closest_bush}")
         results_bush = simulate_multiple_starts(grid, tree_types, [closest_bush], wind_speed=wind_speed,
                                                 wind_direction=wind_direction)
-        results_bush["category"] = "fire_at_bush"
+        results_bush["category"] = "fire_at_bush"  # Label simulation results
     else:
         print("No valid Bush fire point found.")
 
     if closest_non_bush:
-        # print(f"Simulating fire point (Non-Bush): {closest_non_bush}")
         results_non_bush = simulate_multiple_starts(grid, tree_types, [closest_non_bush], wind_speed=wind_speed,
                                                     wind_direction=wind_direction)
-        results_non_bush["category"] = "fire_at_non_bush"
+        results_non_bush["category"] = "fire_at_non_bush"  # Label simulation results
     else:
         print("No valid Non-Bush fire point found.")
 
+    # Combine bush and non-bush results into one DataFrame
     combined_results = pd.concat([results_bush, results_non_bush], ignore_index=True)
     return combined_results
+
 
 
 # Hypothesis 2 functions
