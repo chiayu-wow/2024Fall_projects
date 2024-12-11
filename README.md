@@ -113,19 +113,10 @@ Afterward, we see how the statistic result varied from this two situation.
 ### Result
 
 From the simulation results:
-
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_01.png)
 - **Burned Area Percentage:**
   - **Fire at Bushland:** Mean = 30.58%, Std = 17.68%
   - **Fire at Non-Bushland:** Mean = 26.28%, Std = 21.12%
-  
-- **Percentage Increase in Burned Area:**
-  \[
-  \text{Increase} = \frac{\text{Bush Mean Burned Area} - \text{Non-Bush Mean Burned Area}}{\text{Non-Bush Mean Burned Area}} \times 100\%
-  \]
-  Substituting the values:
-  \[
-  \text{Increase} = \frac{30.58 - 26.28}{26.28} \times 100\% = 16.37\%
-  \]
 
 #### **Conclusion of Burned Area Comparison**
 The burned area from fires ignited in bushland is, on average, **16.37% larger** than that from fires in non-bushland areas. This is significantly smaller than the hypothesized **50% increase**.  
@@ -135,17 +126,14 @@ Thus, **the hypothesis is not fully supported** based on these simulation result
 ---
 
 ### **Visual Evidence**
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_02.png) ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_03.png)
+
 1. **Box Plot of Burned Area:**
    - The median burned area for bushland fires is higher than for non-bushland, but the overlap in interquartile ranges indicates that the difference is not as pronounced as hypothesized.
 
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_04.png)
 2. **Scatter Plot of Burned Area vs. Duration:**
    - Both categories show a positive correlation between burned area and duration, with bushland fires generally burning slightly more area for comparable durations.
-
----
-
-### **Possible Reasons for Discrepancy**
-1. **Randomness in Fire Spread:**
-   - The Monte Carlo simulation introduces stochastic elements, which may have reduced the observed differences between the two categories.
 
 ---
 
