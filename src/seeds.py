@@ -37,6 +37,20 @@ def initialize_grid(rows, cols, water_body_ratio=0.1, fire_location=(25, 25), nu
             - "pine", "oak", or "willow" for tree cells
             - "bush" for bush cells
             - None for non-tree/non-bush cells
+
+        Examples:
+        ---------
+        >>> grid, tree_types = initialize_grid(10, 10, water_body_ratio=0.2, fire_location=(5, 5), bush_ratio=0.1)
+        >>> grid.shape
+        (10, 10)
+        >>> grid[5, 5] == 2
+        True
+        >>> np.sum(grid == 3) <= 10 * 10 * 0.2  # Ensure water bodies match ratio
+        True
+        >>> np.sum(grid == 5) <= np.sum(grid == 1) * 0.1  # Ensure bushes are no more than 10% of trees
+        True
+        >>> tree_types.shape == grid.shape
+        True
     """
     # Initialize grid: 0 = empty, 1 = tree
     grid = np.random.choice([0, 1], size=(rows, cols), p=[0.15, 0.85])  # 15% empty, 85% plants
