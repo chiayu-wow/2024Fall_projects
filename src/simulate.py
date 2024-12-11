@@ -5,7 +5,8 @@ from data import tree_burn_rates
 from plot import plot_fire
 import pandas as pd
 
-def calculate_humidity_and_temperature(grid ,season = None):
+
+def calculate_humidity_and_temperature(grid, season=None):
     """
     Calculate humidity and temperature for a given grid based on the season, proximity to water, and fire.
 
@@ -96,7 +97,7 @@ def calculate_humidity_and_temperature(grid ,season = None):
     return humidities, temperatures  # Return both the humidity and temperature grids
 
 
-def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=1, wind_affected = True, season = None):
+def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=1, wind_affected=True, season=None):
     """
         Simulates fire spread on a grid considering tree types, wind speed, wind direction, and season.
 
@@ -179,7 +180,7 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=1, w
                                 adjusted_burn_rate = burn_rate * (1 + wind_factor) if wind_affected else burn_rate
                                 burn_probability = flammability * (1 - humidities[nr, nc]) * (
                                         1 + (temperatures[nr, nc] - 25) / 100) * (
-                                                               1 + wind_factor / 5)  # Wind amplifies burn probability
+                                                           1 + wind_factor / 5)  # Wind amplifies burn probability
 
                                 if np.random.random() < burn_probability:
                                     new_grid[nr, nc] = 2  # Ignite cell
@@ -187,7 +188,7 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=1, w
 
                         # Burned-out state
                         new_grid[r, c] = 4
-                        burn_counts[r,c] += 1
+                        burn_counts[r, c] += 1
                         cooldowns[r, c] = 0
                         total_burned_area += 1  # Increment burned area count
 
@@ -217,4 +218,3 @@ def simulate_fire(grid, tree_types, wind_speed, wind_direction, simulations=1, w
     plt.show()
 
     return burn_probabilities, results_df
-

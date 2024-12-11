@@ -159,7 +159,6 @@ def compare_bush_non_bush(grid, tree_types, wind_speed, wind_direction):
     return combined_results
 
 
-
 # Hypothesis 2 functions
 def plot_fire_and_water_influence(grid, burn_probabilities):
     """
@@ -290,7 +289,8 @@ def compare_wind_speeds(grid, tree_types, wind_speeds, wind_direction):
         grid_with_fire = clear_and_set_fire(grid, (grid.shape[0] // 4, grid.shape[1] // 2))
 
         # Simulate fire
-        burn_probabilities, simulation_results = simulate_fire(grid_with_fire, tree_types, wind_speed, wind_direction, 1)
+        burn_probabilities, simulation_results = simulate_fire(grid_with_fire, tree_types, wind_speed, wind_direction,
+                                                               1)
 
         # Add wind speed and direction to results
         simulation_results["wind_speed"] = wind_speed
@@ -302,7 +302,6 @@ def compare_wind_speeds(grid, tree_types, wind_speeds, wind_direction):
     # Combine all results into a single DataFrame
     combined_results = pd.concat(all_results, ignore_index=True)
     return combined_results, burn_probabilities
-
 
 
 # Validation functions

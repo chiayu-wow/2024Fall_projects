@@ -21,7 +21,6 @@ from seeds import initialize_grid
 
 """
 
-# main code
 # Main code execution starts here
 if __name__ == "__main__":
     rows, cols = 50, 50  # Define the size of the grid (50x50)
@@ -91,7 +90,8 @@ if __name__ == "__main__":
     wind_direction_03 = "N"  # Define wind direction for the simulation
 
     # Conduct the fire spread simulation under varying wind conditions
-    combined_results_03, burn_probabilities_03 = compare_wind_speeds(grid, tree_types, wind_speeds_03, wind_direction_03)
+    combined_results_03, burn_probabilities_03 = compare_wind_speeds(grid, tree_types, wind_speeds_03,
+                                                                     wind_direction_03)
 
     # Save the results of wind-speed-influenced burn probabilities
     output_file_03 = "data/wind_burn_probabilities.txt"

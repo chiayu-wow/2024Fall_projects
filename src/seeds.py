@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def initialize_grid(rows, cols, water_body_ratio=0.1, fire_location=(25, 25), num_water_bodies=10, bush_ratio=0.05,
                     nums_of_busharea=4):
     """

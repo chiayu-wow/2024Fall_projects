@@ -3,6 +3,7 @@ from matplotlib.colors import to_rgb  # Import to_rgb from matplotlib.colors
 import numpy as np
 from data import tree_colors
 
+
 def plot_fire(grid, tree_types, hours):
     """
     Visualize the fire spread simulation with a color-coded grid.
@@ -63,6 +64,7 @@ def plot_fire(grid, tree_types, hours):
     plt.pause(0.1)  # Pause to update the plot
     plt.clf()  # Clear the figure for the next plot
 
+
 def create_heatmap(ax, data, cmap, title, xlabel, ylabel, colorbar_label):
     """
     Helper function to create a heatmap visualization.
@@ -101,6 +103,7 @@ def create_heatmap(ax, data, cmap, title, xlabel, ylabel, colorbar_label):
     ax.set_ylabel(ylabel)  # Label the y-axis
     cbar = plt.colorbar(img, ax=ax)  # Add a colorbar
     cbar.set_label(colorbar_label)  # Label the colorbar
+
 
 def plot_single_heatmap(data, cmap, title, xlabel, ylabel, colorbar_label):
     """
