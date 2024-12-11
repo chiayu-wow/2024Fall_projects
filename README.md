@@ -104,13 +104,16 @@ much slower rate of 5 chains/hour .
 
 ## Hypothesis 1
 ### Hypothesis : The burned area is expected to increase by approximately 50% when the ignition point originates from bushland compared to forested areas composed of willow, pine, and oak trees.
-The impact of the ignition point location (vegetation type) on the burning area and duration of wildfires .... 
-1. Independent variable : fire spread rate, burned probability(randomize)
+
+1. Independent variable : ignition point location (bush or non-bush)
 2. Dependent variable : burned area, duration
 3. Controlled variables : tree type, water bodies, humidity, temperature, wind condition
-We run the simulation in two situation each 50 times. one is the ignition point is on bush, and the other is on the forest(willow, oak or pine tree). 
-Afterward, we see how the statistic result varied from this two situation.
-### Result
+
+We conducted the simulation 50 times for each of two scenarios: one where the ignition point was on a bush, and another where it was in a forest (willow, oak, or pine trees). Subsequently, we analyzed how the statistical results differed between these two scenarios.
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_001.png)
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_002.png)
+
+### **Statistical Result**
 
 From the simulation results:
 ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_01.png)
@@ -118,27 +121,32 @@ From the simulation results:
   - **Fire at Bushland:** Mean = 30.58%, Std = 17.68%
   - **Fire at Non-Bushland:** Mean = 26.28%, Std = 21.12%
 
-#### **Conclusion of Burned Area Comparison**
-The burned area from fires ignited in bushland is, on average, **16.37% larger** than that from fires in non-bushland areas. This is significantly smaller than the hypothesized **50% increase**.  
-
+Fires in bushland tend to spread slightly faster and burn a larger percentage of the area compared to non-bushland fires.
+The burned area from fires ignited in bushland is, on average, **4.3% larger** than that from fires in non-bushland areas. This is significantly smaller than the hypothesized **50% increase**.
 Thus, **the hypothesis is not fully supported** based on these simulation results. While fires in bushland do tend to burn larger areas, the difference is more modest than expected.
 
 ---
 
-### **Visual Evidence**
-![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_02.png) ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_03.png)
-
+### **Plot**
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_02.png) 
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_03.png)
 1. **Box Plot of Burned Area:**
+   - The variability in burned area for non-bushland is higher, as shown by the broader whiskers in the box plot.
    - The median burned area for bushland fires is higher than for non-bushland, but the overlap in interquartile ranges indicates that the difference is not as pronounced as hypothesized.
-
+2. **Box Plot of Duration:**
+   - From the duration box plot, the distributions for bushland and non-bushland durations appear largely similar, with some overlap.
+   - The median duration of bushland fires is slightly shorter than that of non-bushland fires, indicating that bushland fires burn more quickly.
 ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis1_04.png)
 2. **Scatter Plot of Burned Area vs. Duration:**
    - Both categories show a positive correlation between burned area and duration, with bushland fires generally burning slightly more area for comparable durations.
 
+
 ---
 
 ### **Conclusion**
-The hypothesis that fires in bushland result in a **50% larger burned area** compared to non-bushland is **not supported** by this analysis. Instead, the actual increase in burned area is approximately **16.37%**. This suggests that while bushland ignition does increase fire spread, the effect is less pronounced than initially expected. Further analysis incorporating additional environmental variables may provide deeper insights.
+Fires originating in bushland tend to last slightly longer, likely due to the larger area burned.
+The overlap in duration ranges indicates that fire behavior is influenced by other factors beyond the ignition point type.
+The hypothesis that fires in bushland result in a **50% larger burned area** compared to non-bushland is **not supported** by this analysis. Instead, the actual increase in burned area is approximately **16.37%**. This suggests that while bushland ignition does increase fire spread, the effect is less pronounced than initially expected. 
 
 ## Hypothesis 2
 ### Hypothesis : The impact of humidity on the likelihood of wildfire spread in areas surrounding bodies of water
@@ -178,16 +186,76 @@ The heatmap shows that areas near water bodies are less likely to experience fir
 The statistical analysis supports this conclusion, with cells near the water body showing a lower mean fire probability. The median fire probability near the water body is 0, much lower than the median fire probability of cells farther from the water. This demonstrates that increased humidity near water bodies plays a significant role in reducing wildfire spread.
 
 
+
 ## Hypothesis 3
-### Hypothesis : 
-(explanation)
-1. Independent variable :
-2. Dependent variable :
-3. Controlled variables :
-### Result
-(plot)
-(analyze description)
-(conclusion)
+### Hypothesis : As wind speed increases, wildfire spread accelerates, leading to shorter burn durations for a given area.
+
+1. Independent variable : wind speed 
+2. Dependent variable : burned area, duration
+3. Controlled variables : wind direction,tree type, water bodies, humidity, temperature
+
+We conducted the hypothesis test under four different wind speed conditions to observe how the burn patterns changed.
+
+### **Burn Probability Heatmap**
+
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_01.png)
+
+wind = 0
+
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_00.png)
+
+wind = 5
+
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_05.png)
+
+wind = 10
+
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_10.png)
+
+wind = 20
+
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_20.png)
+
+wind = 30
+
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_30.png)
+
+As observed from the changes in burn patterns, transitioning from no wind (wind speed = 0) to strong wind (wind speed = 30), the fire spreads in all directions when there is no wind, avoiding only water bodies. However, as the wind speed increases, the burn pattern becomes more pronounced on the downwind side. Conversely, the upwind side shows reduced burning as the wind becomes stronger.
+
+
+### **Statistical Results**
+
+From the simulation results:  
+![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_stat.png)
+
+- As wind speed increases, the burned area initially increases slightly (from 0 to 5 m/s) but then decreases steadily at higher wind speeds (10 m/s and above).
+- The duration of the wildfire consistently decreases with increasing wind speed, supporting the hypothesis that higher wind speeds result in faster fire spread and shorter burn times.
+
+---
+
+### **Plot**
+ 
+1. **Burned Area Distribution (Box Plot):**  
+   ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_box1.png) 
+   - The variability in burned area is highest at 0 m/s, indicating more inconsistent fire spread in calm wind conditions.
+   - The burned area slightly increases at 5 m/s but decreases significantly at higher wind speeds, suggesting that high wind speeds might create conditions where fires burn out more quickly.
+
+2. **Duration Distribution (Box Plot):**  
+   ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_box2.png)  
+   - Fire duration consistently decreases with increasing wind speed, reflecting faster fire spread and burnout at higher wind speeds.
+   - The variability in fire duration is highest at 0 m/s and becomes minimal at 20 and 30 m/s, indicating more consistent fire behavior under strong wind conditions.
+
+3. **Burned Area vs. Duration (Scatter Plot):**  
+   ![image](https://github.com/chiayu-wow/2024Fall_projects/blob/main/image/hypothesis2_scatter.png)   
+   - Higher wind speeds result in data points clustered in the lower-left quadrant, indicating smaller burned areas and shorter durations.
+   - At 0 and 5 m/s, data points are more spread out, showing greater variability in fire behavior.
+
+---
+
+### **Conclusion**
+The hypothesis that higher wind speeds lead to faster wildfire spread and shorter burn durations is **partially supported**:
+- **Duration:** The duration consistently decreases with higher wind speeds, validating the hypothesis for burn time.  
+- **Burned Area:** The burned area shows a non-linear relationship, increasing slightly at moderate wind speeds (5 m/s) but decreasing at higher wind speeds (10-30 m/s). This suggests that very high wind speeds may contribute to faster fire extinguishment due to more rapid fuel consumption or dispersal of fire. i
 
 
 ## Validation 1
@@ -226,7 +294,14 @@ In winter, most areas remain unaffected, with only the fire’s starting point s
 
 Statistical comparisons reveal the mean fire spread is much higher in summer, and the median fire spread jumps from 0 in winter to 75 in summer. These findings confirm that seasonal variations, particularly temperature and humidity, significantly affect wildfire spread.
 
-## Conclusion
-1. ...
 
 ## Sources
+- [Fire Behavior Measures](https://nwfirescience.org/sites/default/files/publications/FIREFACTS_Measures%20of%20fire%20behavior%20FINAL.pdf)  
+- [Wildfire History](https://wfca.com/wildfire-articles/biggest-wildfires-in-us-history/)
+- [Fire simulation](https://github.com/gongouveia/Monte-Carlo-Simulation-Fire/blob/main/fire_simulation-1.ipynb)
+- [Wildfire Model](https://www.mdpi.com/2571-6255/3/4/71)
+- [Modeling Wildfire Risk](https://ui.adsabs.harvard.edu/abs/2016AGUFMGC51E1253B/abstract)
+- [Wildfire report](https://www.ncei.noaa.gov/access/monitoring/monthly-report/fire/202401)
+- [Mendocino National Forest](https://www.fs.usda.gov/detailfull/mendocino/learning/nature-science/?cid=stelprdb5143325)
+- [Wind speed rule](https://annforsci.biomedcentral.com/articles/10.1007/s13595-019-0829-8)
+- [Beaufort Wind Scale](https://www.weather.gov/mfl/beaufort) 

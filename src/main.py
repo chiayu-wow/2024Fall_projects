@@ -8,7 +8,7 @@ from seeds import initialize_grid
 if __name__ == "__main__":
     rows, cols = 50, 50  # 網格尺寸
     # generate grip map
-    '''
+
     grid, tree_types = initialize_grid(rows, cols, 0.05)
     
     with open("data/data_grid.txt", "w") as file:
@@ -19,7 +19,7 @@ if __name__ == "__main__":
         for row in tree_types:
             file.write(" ".join(map(lambda x: str(x) if x is not None else "None", row)) + "\n")
 
-    '''
+    
     # read grip map
     with open('data/data_grid.txt', 'r') as file:
         data = file.readlines()
